@@ -9,8 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.qun.news.R;
+import com.qun.news.utils.DensityUtil;
 import com.qun.news.view.RotateTransformer;
 
 public class GuideActivity extends AppCompatActivity implements View.OnClickListener {
@@ -19,6 +21,9 @@ public class GuideActivity extends AppCompatActivity implements View.OnClickList
     //    private CustomViewPager mViewPager;
     private int[] imageResIds = {R.mipmap.guide_1, R.mipmap.guide_2, R.mipmap.guide_3};
     private Button mBtnGuide;
+    private LinearLayout mLlGuidePointGroup;
+    private ImageView mIvGuideFocus;
+    private int mPointMargin;//点之间的间距
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +55,9 @@ public class GuideActivity extends AppCompatActivity implements View.OnClickList
                 } else {
                     mBtnGuide.setVisibility(View.GONE);
                 }
+                //当手指滑动viewpager实时让选中点移动起来
+//                （position+offset）*点之间的间距，就是选中要移动的x的值
+                mIvGuideFocus.setTranslationX((position + positionOffset) * mPointMargin);
             }
 
             //当页面被 选中时，才调用一次
@@ -70,6 +78,29 @@ public class GuideActivity extends AppCompatActivity implements View.OnClickList
         });
         mBtnGuide = (Button) findViewById(R.id.btn_guide);
         mBtnGuide.setOnClickListener(this);
+        //获取水平的线性布局，选中点
+        mLlGuidePointGroup = (LinearLayout) findViewById(R.id.ll_guide_point_group);
+        mIvGuideFocus = (ImageView) findViewById(R.id.iv_guide_focus);
+        //动态创建小白点
+        for (int i = 0; i < imageResIds.length; i++) {
+            ImageView point = new ImageView(GuideActivity.this);
+            point.setImageResource(R.mipmap.dot_normal);
+            //设置点之间间距，设置选中点与未选中点大小一致(代码中写5,5px)
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(DensityUtil.dip2px(GuideActivity.this, 5), DensityUtil.dip2px(GuideActivity.this, 5));
+            if (i != 0) {
+                layoutParams.leftMargin = DensityUtil.dip2px(GuideActivity.this, 5);
+            }
+            point.setLayoutParams(layoutParams);
+            mLlGuidePointGroup.addView(point);
+        }
+        //获取2点之间的间距(view未显示，默认的左上右下，宽高都是0)
+        mLlGuidePointGroup.post(new Runnable() {//post,当mLlGuidePointGroup显示之后才调用run()
+            @Override
+            public void run() {
+                mPointMargin = mLlGuidePointGroup.getChildAt(1).getLeft() - mLlGuidePointGroup.getChildAt(0).getLeft();
+                System.out.println("pointMargin:" + mPointMargin);
+            }
+        });
     }
 
     @Override

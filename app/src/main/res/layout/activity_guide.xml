@@ -47,6 +47,7 @@
         </LinearLayout>
 
         <ImageView
+            android:id="@+id/iv_guide_focus"
             android:layout_width="5dp"
             android:layout_height="5dp"
             android:src="@mipmap/dot_focus"/>
