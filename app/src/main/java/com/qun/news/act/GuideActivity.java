@@ -9,12 +9,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.qun.news.R;
+import com.qun.news.view.CustomViewPager;
 import com.qun.news.view.DepthPageTransformer;
-import com.qun.news.view.ZoomOutPageTransformer;
 
 public class GuideActivity extends AppCompatActivity {
 
-    private ViewPager mViewPager;
+    //    private ViewPager mViewPager;
+    private CustomViewPager mViewPager;
     private int[] imageResIds = {R.mipmap.guide_1, R.mipmap.guide_2, R.mipmap.guide_3};
 
     @Override
@@ -25,11 +26,31 @@ public class GuideActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        mViewPager = (ViewPager) findViewById(R.id.viewPager);
+//        mViewPager = (ViewPager) findViewById(R.id.viewPager);
+        mViewPager = (CustomViewPager) findViewById(R.id.viewPager);
         GuideAdapter guideAdapter = new GuideAdapter();
         mViewPager.setAdapter(guideAdapter);
 //        mViewPager.setPageTransformer(true, new ZoomOutPageTransformer());
-        mViewPager.setPageTransformer(true, new DepthPageTransformer());
+//        mViewPager.setPageTransformer(true, new DepthPageTransformer());
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            //当页面滑动时，该方法实时被调用
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            //当页面被 选中时，才调用一次
+            @Override
+            public void onPageSelected(int position) {
+
+            }
+
+            //当页面滚动状态改变时，才执行一次
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
     private class GuideAdapter extends PagerAdapter {
@@ -51,6 +72,7 @@ public class GuideActivity extends AppCompatActivity {
 //            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
             imageView.setBackgroundResource(imageResIds[position]);
             container.addView(imageView);
+            mViewPager.addChildView(imageView, position);
             return imageView;
         }
 
@@ -58,6 +80,7 @@ public class GuideActivity extends AppCompatActivity {
         public void destroyItem(ViewGroup container, int position, Object object) {
 //            super.destroyItem(container, position, object);
             container.removeView((View) object);
+            mViewPager.removeChildView(position);
         }
     }
 }
