@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context="com.qun.news.act.SplashActivity">
 
-    <VideoView
+    <com.qun.news.view.MyVideoView
         android:id="@+id/videoView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
