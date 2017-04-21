@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.qun.news.R;
+import com.qun.news.view.DepthPageTransformer;
+import com.qun.news.view.ZoomOutPageTransformer;
 
 public class GuideActivity extends AppCompatActivity {
 
@@ -26,6 +28,8 @@ public class GuideActivity extends AppCompatActivity {
         mViewPager = (ViewPager) findViewById(R.id.viewPager);
         GuideAdapter guideAdapter = new GuideAdapter();
         mViewPager.setAdapter(guideAdapter);
+//        mViewPager.setPageTransformer(true, new ZoomOutPageTransformer());
+        mViewPager.setPageTransformer(true, new DepthPageTransformer());
     }
 
     private class GuideAdapter extends PagerAdapter {
