@@ -39,7 +39,7 @@ public class SplashActivity extends AppCompatActivity {
     public void enterHome(View view) {
 //        判断是否是第一次进入应用，如果是则跳转引导界面，否则进入主界面
         boolean isFirst = SpUtil.getBoolean(SplashActivity.this, "isFirst", true);
-        if (isFirst) {
+        if (true) {
             //进入引导界面
             SpUtil.saveBoolean(SplashActivity.this, "isFirst", false);
             startActivity(new Intent(SplashActivity.this, GuideActivity.class));

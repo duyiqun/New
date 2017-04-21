@@ -6,6 +6,12 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <!--<style name="Style_splash" parent="AppTheme">-->
+    <style name="AppTheme.Style_splash">
+        <item name="android:windowFullscreen">true</item>
     </style>
 
 </resources>
