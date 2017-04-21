@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import com.qun.news.R;
 import com.qun.news.view.CustomViewPager;
 import com.qun.news.view.DepthPageTransformer;
+import com.qun.news.view.RotateTransformer;
 
 public class GuideActivity extends AppCompatActivity {
 
@@ -32,6 +33,7 @@ public class GuideActivity extends AppCompatActivity {
         mViewPager.setAdapter(guideAdapter);
 //        mViewPager.setPageTransformer(true, new ZoomOutPageTransformer());
 //        mViewPager.setPageTransformer(true, new DepthPageTransformer());
+        mViewPager.setPageTransformer(true, new RotateTransformer());
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             //当页面滑动时，该方法实时被调用
             @Override

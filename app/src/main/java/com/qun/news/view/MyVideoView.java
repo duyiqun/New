@@ -9,6 +9,7 @@ import android.widget.VideoView;
  */
 
 public class MyVideoView extends VideoView {
+
     public MyVideoView(Context context) {
         this(context, null);
     }
