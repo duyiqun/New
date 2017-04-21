@@ -9,14 +9,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.qun.news.R;
-import com.qun.news.view.CustomViewPager;
-import com.qun.news.view.DepthPageTransformer;
 import com.qun.news.view.RotateTransformer;
 
 public class GuideActivity extends AppCompatActivity {
 
-    //    private ViewPager mViewPager;
-    private CustomViewPager mViewPager;
+    private ViewPager mViewPager;
+    //    private CustomViewPager mViewPager;
     private int[] imageResIds = {R.mipmap.guide_1, R.mipmap.guide_2, R.mipmap.guide_3};
 
     @Override
@@ -27,8 +25,8 @@ public class GuideActivity extends AppCompatActivity {
     }
 
     private void initView() {
-//        mViewPager = (ViewPager) findViewById(R.id.viewPager);
-        mViewPager = (CustomViewPager) findViewById(R.id.viewPager);
+        mViewPager = (ViewPager) findViewById(R.id.viewPager);
+//        mViewPager = (CustomViewPager) findViewById(R.id.viewPager);
         GuideAdapter guideAdapter = new GuideAdapter();
         mViewPager.setAdapter(guideAdapter);
 //        mViewPager.setPageTransformer(true, new ZoomOutPageTransformer());
@@ -74,7 +72,7 @@ public class GuideActivity extends AppCompatActivity {
 //            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
             imageView.setBackgroundResource(imageResIds[position]);
             container.addView(imageView);
-            mViewPager.addChildView(imageView, position);
+//            mViewPager.addChildView(imageView, position);
             return imageView;
         }
 
@@ -82,7 +80,7 @@ public class GuideActivity extends AppCompatActivity {
         public void destroyItem(ViewGroup container, int position, Object object) {
 //            super.destroyItem(container, position, object);
             container.removeView((View) object);
-            mViewPager.removeChildView(position);
+//            mViewPager.removeChildView(position);
         }
     }
 }
