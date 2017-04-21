@@ -13,8 +13,8 @@ public class RotateTransformer implements ViewPager.PageTransformer {
 
     @Override
     public void transformPage(View page, float position) {
-        System.out.println("view:" + page);
-        System.out.println("position:" + position);
+//        System.out.println("view:" + page);
+//        System.out.println("position:" + position);
 
 //        view 被添加到viewpager中的子界面 A页面B页面
 //        A页面position的取值[0,-1]
