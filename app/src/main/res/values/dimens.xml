@@ -5,4 +5,7 @@
     <dimen name="title_height">48dp</dimen>
     <dimen name="slidingmenu_content_width">160dp</dimen>
     <dimen name="shadow_width">5dp</dimen>
+    <dimen name="bottom_tab_padding_drawable">2.0dip</dimen>
+    <dimen name="bottom_tab_padding_up">2.0dip</dimen>
+    <dimen name="bottom_tab_font_size">14.0sp</dimen>
 </resources>
