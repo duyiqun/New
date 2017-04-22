@@ -5,6 +5,8 @@ import android.os.Bundle;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
 import com.qun.news.R;
+import com.qun.news.fragment.HomeFragment;
+import com.qun.news.fragment.MenuFragment;
 
 public class HomeActivity extends SlidingFragmentActivity {
 
@@ -44,6 +46,12 @@ public class HomeActivity extends SlidingFragmentActivity {
 //        //设置第二个菜单的阴影图片
 //        slidingMenu.setSecondaryShadowDrawable(R.drawable.shadow);
 
-        
+        //设置左边菜单界面
+        MenuFragment menuFragment = new MenuFragment();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fl_menu, menuFragment).commit();
+
+        //设置右边菜单界面
+        HomeFragment homeFragment = new HomeFragment();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fl_content, homeFragment, "HOME").commit();
     }
 }
