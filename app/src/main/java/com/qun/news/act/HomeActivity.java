@@ -1,11 +1,11 @@
 package com.qun.news.act;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
 import com.qun.news.R;
-import com.qun.news.fragment.HomeFragment;
 import com.qun.news.fragment.MenuFragment;
 
 public class HomeActivity extends SlidingFragmentActivity {
@@ -51,7 +51,11 @@ public class HomeActivity extends SlidingFragmentActivity {
         getSupportFragmentManager().beginTransaction().replace(R.id.fl_menu, menuFragment).commit();
 
         //设置右边菜单界面
-        HomeFragment homeFragment = new HomeFragment();
-        getSupportFragmentManager().beginTransaction().replace(R.id.fl_content, homeFragment, "HOME").commit();
+//        HomeFragment homeFragment = new HomeFragment();
+//        getSupportFragmentManager().beginTransaction().replace(R.id.fl_content, homeFragment, "HOME").commit();
+    }
+
+    public void switchFragment(Fragment fragment) {
+        getSupportFragmentManager().beginTransaction().replace(R.id.fl_content, fragment, "HOME").commit();
     }
 }
