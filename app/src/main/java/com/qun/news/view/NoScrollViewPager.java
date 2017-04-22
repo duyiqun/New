@@ -25,6 +25,7 @@ public class NoScrollViewPager extends ViewPager {
         return false;//设置为不处理，并不消费（将触摸事件不传递给viewpager的onTouchEvent方法，viewpager就不会滑动了）
     }
 
+    //事件拦截
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
 //        return super.onInterceptTouchEvent(ev);//有可能拦截，子类中如果有listview，viewpager，scrollview，这些子控件的触摸效果都会失效
