@@ -1,7 +1,6 @@
 package com.qun.news.fragment;
 
 import android.support.annotation.IdRes;
-import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.RadioGroup;
@@ -15,6 +14,7 @@ import com.qun.news.Home.SettingPage;
 import com.qun.news.Home.SmartServicePage;
 import com.qun.news.R;
 import com.qun.news.adapter.HomeAdapter;
+import com.qun.news.view.NoScrollViewPager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +25,7 @@ import java.util.List;
 
 public class HomeFragment extends BaseFragment {
 
-    private ViewPager mViewPager;
+    private NoScrollViewPager mViewPager;
 //    private Context mContext;
 
     private RadioGroup mMainRadio;
@@ -52,7 +52,7 @@ public class HomeFragment extends BaseFragment {
     @Override
     public View initView(LayoutInflater inflater) {
         View view = inflater.inflate(R.layout.frag_home, null);
-        mViewPager = (ViewPager) view.findViewById(R.id.view_pager);
+        mViewPager = (NoScrollViewPager) view.findViewById(R.id.view_pager);
         mMainRadio = (RadioGroup) view.findViewById(R.id.main_radio);
         return view;
     }
