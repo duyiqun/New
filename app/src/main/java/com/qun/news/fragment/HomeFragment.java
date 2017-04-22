@@ -39,6 +39,7 @@ public class HomeFragment extends BaseFragment {
 //        mSlidingMenu = ((HomeActivity) mContext).getSlidingMenu();
 //    }
 
+//    //界面初始化方法
 //    @Nullable
 //    @Override
 //    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
