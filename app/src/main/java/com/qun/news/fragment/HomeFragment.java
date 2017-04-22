@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioGroup;
 
+import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.qun.news.Home.BasePage;
 import com.qun.news.Home.FunctionPage;
 import com.qun.news.Home.GoverPage;
@@ -18,6 +19,7 @@ import com.qun.news.Home.NewsCenterPage;
 import com.qun.news.Home.SettingPage;
 import com.qun.news.Home.SmartServicePage;
 import com.qun.news.R;
+import com.qun.news.act.HomeActivity;
 import com.qun.news.adapter.HomeAdapter;
 
 import java.util.ArrayList;
@@ -32,12 +34,14 @@ public class HomeFragment extends Fragment {
     private ViewPager mViewPager;
     private Context mContext;
     private RadioGroup mMainRadio;
+    private SlidingMenu mSlidingMenu;
 
     //初始化方法
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mContext = getActivity();
+        mSlidingMenu = ((HomeActivity) mContext).getSlidingMenu();
     }
 
     @Nullable
@@ -62,9 +66,6 @@ public class HomeFragment extends Fragment {
         HomeAdapter homeAdapter = new HomeAdapter(mContext, homePages);
         mViewPager.setAdapter(homeAdapter);
 
-        //第一次进入默认选中首页
-        mMainRadio.check(R.id.rb_function);
-
         //给单选按钮组设置选中监听
         mMainRadio.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -73,23 +74,36 @@ public class HomeFragment extends Fragment {
                 switch (checkedId) {
                     case R.id.rb_function://首页
                         mViewPager.setCurrentItem(0, false);//设置viewpager页面切换时没有滑动效果
+                        //设置侧滑菜单为禁止模式
+                        mSlidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_NONE);
                         break;
                     case R.id.rb_news_center://新闻中心
                         mViewPager.setCurrentItem(1, false);//设置viewpager页面切换时没有滑动效果
+                        //设置侧滑菜单为全屏模式
+                        mSlidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
                         break;
                     case R.id.rb_smart_service://智慧服务
                         mViewPager.setCurrentItem(2, false);//设置viewpager页面切换时没有滑动效果
+                        //设置侧滑菜单为全屏模式
+                        mSlidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
                         break;
                     case R.id.rb_gov_affairs://政务指南
                         mViewPager.setCurrentItem(3, false);//设置viewpager页面切换时没有滑动效果
+                        //设置侧滑菜单为全屏模式
+                        mSlidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
                         break;
                     case R.id.rb_setting://设置
                         mViewPager.setCurrentItem(4, false);//设置viewpager页面切换时没有滑动效果
+                        //设置侧滑菜单为禁止模式
+                        mSlidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_NONE);
                         break;
                     default:
                         break;
                 }
             }
         });
+
+        //第一次进入默认选中首页
+        mMainRadio.check(R.id.rb_function);
     }
 }
