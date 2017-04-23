@@ -14,6 +14,7 @@ import com.qun.news.Home.SettingPage;
 import com.qun.news.Home.SmartServicePage;
 import com.qun.news.R;
 import com.qun.news.adapter.HomeAdapter;
+import com.qun.news.view.LazyViewPager;
 import com.qun.news.view.NoScrollViewPager;
 
 import java.util.ArrayList;
@@ -23,13 +24,14 @@ import java.util.List;
  * Created by Qun on 2017/4/22.
  */
 
-public class HomeFragment extends BaseFragment {
+public class HomeFragment extends BaseFragment implements LazyViewPager.OnPageChangeListener {
 
     private NoScrollViewPager mViewPager;
 //    private Context mContext;
 
     private RadioGroup mMainRadio;
-//    private SlidingMenu mSlidingMenu;
+    private List<BasePage> mHomePages;//新闻中心的5个页面对象管理集合
+    //    private SlidingMenu mSlidingMenu;
 
 //    //初始化方法
 //    @Override
@@ -113,14 +115,16 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     protected void initData() {
-        List<BasePage> homePages = new ArrayList<>();
-        homePages.add(new FunctionPage(mContext));
-        homePages.add(new NewsCenterPage(mContext));
-        homePages.add(new SmartServicePage(mContext));
-        homePages.add(new GoverPage(mContext));
-        homePages.add(new SettingPage(mContext));
-        HomeAdapter homeAdapter = new HomeAdapter(mContext, homePages);
+        mHomePages = new ArrayList<>();
+        mHomePages.add(new FunctionPage(mContext));
+        mHomePages.add(new NewsCenterPage(mContext));
+        mHomePages.add(new SmartServicePage(mContext));
+        mHomePages.add(new GoverPage(mContext));
+        mHomePages.add(new SettingPage(mContext));
+        HomeAdapter homeAdapter = new HomeAdapter(mContext, mHomePages);
         mViewPager.setAdapter(homeAdapter);
+
+        mViewPager.setOnPageChangeListener(this);
 
         //给单选按钮组设置选中监听
         mMainRadio.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -132,6 +136,11 @@ public class HomeFragment extends BaseFragment {
                         mViewPager.setCurrentItem(0, false);//设置viewpager页面切换时没有滑动效果
                         //设置侧滑菜单为禁止模式
                         mSlidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_NONE);
+                        //获取显示在屏幕上的新闻中心对象并获取数据显示才可以
+//                        NewsCenterPage newsCenterPage = new NewsCenterPage(mContext);
+//                        newsCenterPage.initData();
+//                        BasePage basePage = mHomePages.get(1);
+//                        basePage.initData();
                         break;
                     case R.id.rb_news_center://新闻中心
                         mViewPager.setCurrentItem(1, false);//设置viewpager页面切换时没有滑动效果
@@ -161,5 +170,21 @@ public class HomeFragment extends BaseFragment {
 
         //第一次进入默认选中首页
         mMainRadio.check(R.id.rb_function);
+    }
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+        BasePage basePage = mHomePages.get(position);
+        basePage.initData();
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+
     }
 }

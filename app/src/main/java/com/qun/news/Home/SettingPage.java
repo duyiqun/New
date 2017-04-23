@@ -26,6 +26,11 @@ public class SettingPage extends BasePage {
         return lv;
     }
 
+    @Override
+    public void initData() {
+
+    }
+
     private List<String> initDatas() {
         List<String> datas = new ArrayList<>();
         for (int i = 0; i < 30; i++) {

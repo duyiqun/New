@@ -22,4 +22,6 @@ public abstract class BasePage {
     public View getRootView() {
         return mView;
     }
+
+    public abstract void initData();
 }

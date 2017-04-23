@@ -20,4 +20,13 @@ public class NewsCenterPage extends BasePage {
         tv.setText("新闻中心");
         return tv;
     }
+
+    @Override
+    public void initData() {
+        System.out.println("获取了新闻中心的数据");
+    }
+
+//    public void initData() {
+//        System.out.println("获取了新闻中心的数据");
+//    }
 }

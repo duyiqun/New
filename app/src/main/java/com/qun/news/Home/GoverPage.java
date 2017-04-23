@@ -20,4 +20,9 @@ public class GoverPage extends BasePage{
         tv.setText("政务服务");
         return tv;
     }
+
+    @Override
+    public void initData() {
+
+    }
 }

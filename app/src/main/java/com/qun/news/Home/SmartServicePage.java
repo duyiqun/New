@@ -19,4 +19,9 @@ public class SmartServicePage extends BasePage {
         TextView tv = new TextView(mContext);
         tv.setText("智慧服务");
         return tv;    }
+
+    @Override
+    public void initData() {
+
+    }
 }

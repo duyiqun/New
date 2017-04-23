@@ -20,4 +20,9 @@ public class FunctionPage extends BasePage {
         tv.setText("首页");
         return tv;
     }
+
+    @Override
+    public void initData() {
+
+    }
 }
