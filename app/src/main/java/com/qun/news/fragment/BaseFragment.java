@@ -19,6 +19,7 @@ public abstract class BaseFragment extends Fragment {
 
     public Context mContext;
     public SlidingMenu mSlidingMenu;
+    public MenuFragment2 mMenuFragment;
 
     //初始化方法
     @Override
@@ -26,6 +27,7 @@ public abstract class BaseFragment extends Fragment {
         super.onCreate(savedInstanceState);
         mContext = getActivity();
         mSlidingMenu = ((HomeActivity) mContext).getSlidingMenu();
+        mMenuFragment = ((HomeActivity) mContext).getMenuFragment();
     }
 
     //界面初始化方法

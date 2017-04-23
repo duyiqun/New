@@ -10,6 +10,7 @@ import com.qun.news.R;
 import com.qun.news.act.HomeActivity;
 import com.qun.news.adapter.MenuAdapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -82,5 +83,38 @@ public class MenuFragment2 extends BaseFragment implements AdapterView.OnItemCli
     public void setSmartTitles() {
         //隐藏其他listview，显示智慧服务的listview并设置适配器即可
 
+    }
+
+    //根据对应的类型，显示并设置数据即可
+    public void setMenuType(int type) {
+        mLvMenuNewsCenter.setVisibility(View.GONE);
+        mLvMenuSmartService.setVisibility(View.GONE);
+        mLvMenuGovaffairs.setVisibility(View.GONE);
+        this.type = type;
+        switch (this.type) {
+            case TYPE_NEWS_CENTER:
+                mLvMenuNewsCenter.setVisibility(View.VISIBLE);
+                break;
+            case TYPE_SMART_SERVICE:
+                mLvMenuSmartService.setVisibility(View.VISIBLE);
+                List<String> datas = new ArrayList<>();
+                datas.add("智慧服务1");
+                datas.add("智慧服务2");
+                datas.add("智慧服务3");
+                MenuAdapter smartAdapter = new MenuAdapter(mContext, datas);
+                mLvMenuSmartService.setAdapter(smartAdapter);
+                break;
+            case TYPE_GOVER:
+                mLvMenuGovaffairs.setVisibility(View.VISIBLE);
+                List<String> datas1 = new ArrayList<>();
+                datas1.add("政务指南1");
+                datas1.add("政务指南2");
+                datas1.add("政务指南3");
+                MenuAdapter goverAdapter = new MenuAdapter(mContext, datas1);
+                mLvMenuGovaffairs.setAdapter(goverAdapter);
+                break;
+            default:
+                break;
+        }
     }
 }

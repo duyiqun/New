@@ -136,26 +136,32 @@ public class HomeFragment extends BaseFragment implements LazyViewPager.OnPageCh
                         mViewPager.setCurrentItem(0, false);//设置viewpager页面切换时没有滑动效果
                         //设置侧滑菜单为禁止模式
                         mSlidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_NONE);
-                        //获取显示在屏幕上的新闻中心对象并获取数据显示才可以
-//                        NewsCenterPage newsCenterPage = new NewsCenterPage(mContext);
-//                        newsCenterPage.initData();
-//                        BasePage basePage = mHomePages.get(1);
-//                        basePage.initData();
                         break;
                     case R.id.rb_news_center://新闻中心
                         mViewPager.setCurrentItem(1, false);//设置viewpager页面切换时没有滑动效果
                         //设置侧滑菜单为全屏模式
                         mSlidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
+
+                        //获取显示在屏幕上的新闻中心对象并获取数据显示才可以
+//                        NewsCenterPage newsCenterPage = new NewsCenterPage(mContext);
+//                        newsCenterPage.initData();
+//                        BasePage basePage = mHomePages.get(1);
+//                        basePage.initData();
+
+                        mMenuFragment.setMenuType(MenuFragment2.TYPE_NEWS_CENTER);
+
                         break;
                     case R.id.rb_smart_service://智慧服务
                         mViewPager.setCurrentItem(2, false);//设置viewpager页面切换时没有滑动效果
                         //设置侧滑菜单为全屏模式
                         mSlidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
+                        mMenuFragment.setMenuType(MenuFragment2.TYPE_SMART_SERVICE);
                         break;
                     case R.id.rb_gov_affairs://政务指南
                         mViewPager.setCurrentItem(3, false);//设置viewpager页面切换时没有滑动效果
                         //设置侧滑菜单为全屏模式
                         mSlidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
+                        mMenuFragment.setMenuType(MenuFragment2.TYPE_GOVER);
                         break;
                     case R.id.rb_setting://设置
                         mViewPager.setCurrentItem(4, false);//设置viewpager页面切换时没有滑动效果
