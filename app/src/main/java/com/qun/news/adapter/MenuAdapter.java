@@ -16,31 +16,35 @@ import java.util.List;
  * Created by Qun on 2017/4/23.
  */
 
-public class MenuAdapter extends BaseAdapter {
+public class MenuAdapter extends MyBaseAdapter<String> {
 
-    private final Context mContext;
-    private final List<String> mDatas;
+//    private final Context mContext;
+//    private final List<String> mDatas;
     private int mClickPosition;//记录点击的条目索引
 
-    public MenuAdapter(Context context, List<String> datas) {
-        this.mContext = context;
-        this.mDatas = datas;
+    public MenuAdapter(Context context, List datas) {
+        super(context, datas);
     }
 
-    @Override
-    public int getCount() {
-        return mDatas.size();
-    }
+//    public MenuAdapter(Context context, List<String> datas) {
+//        this.mContext = context;
+//        this.mDatas = datas;
+//    }
 
-    @Override
-    public Object getItem(int position) {
-        return mDatas.get(position);
-    }
+//    @Override
+//    public int getCount() {
+//        return mDatas.size();
+//    }
 
-    @Override
-    public long getItemId(int position) {
-        return position;
-    }
+//    @Override
+//    public Object getItem(int position) {
+//        return mDatas.get(position);
+//    }
+
+//    @Override
+//    public long getItemId(int position) {
+//        return position;
+//    }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
