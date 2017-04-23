@@ -5,17 +5,11 @@ import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.FrameLayout;
-import android.widget.Toast;
+import android.widget.TextView;
 
-import com.qun.news.R;
 import com.qun.news.act.HomeActivity;
 import com.qun.news.bean.NewsCenterBean;
 import com.qun.news.fragment.MenuFragment2;
-import com.qun.news.menu.ActionPage;
-import com.qun.news.menu.NewPage;
-import com.qun.news.menu.PicPage;
-import com.qun.news.menu.TopicPage;
 import com.qun.news.utils.GsonTools;
 import com.qun.news.utils.HMAPI;
 import com.qun.news.utils.SpUtil;
@@ -40,17 +34,11 @@ public class NewsCenterPage extends BasePage {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            //默认添加新闻界面进行显示
-//            mNews_center_fl.addView(mNewscenterPages.get(0).getRootView());
-            switchView(0);
-
 //        MenuFragment menuFragment = new MenuFragment();
             MenuFragment2 menuFragment = ((HomeActivity) mContext).getMenuFragment();
             menuFragment.setMenuTitles(menuTitles);
         }
     };
-    private List<BasePage> mNewsCenterPages;
-    private FrameLayout mNewsCenterFl;
 
     public NewsCenterPage(Context context) {
         super(context);
@@ -58,9 +46,9 @@ public class NewsCenterPage extends BasePage {
 
     @Override
     public View initView() {
-        View view = View.inflate(mContext, R.layout.news_center_frame, null);
-        mNewsCenterFl = (FrameLayout) view.findViewById(R.id.news_center_fl);
-        return view;
+        TextView tv = new TextView(mContext);
+        tv.setText("新闻中心");
+        return tv;
     }
 
     @Override
@@ -119,23 +107,7 @@ public class NewsCenterPage extends BasePage {
             menuTitles.add(dataBean.getTitle());
         }
 
-        //创建出新闻中心的4个页面
-        mNewsCenterPages = new ArrayList<>();
-        mNewsCenterPages.add(new NewPage(mContext));
-        mNewsCenterPages.add(new TopicPage(mContext));
-        mNewsCenterPages.add(new PicPage(mContext));
-        mNewsCenterPages.add(new ActionPage(mContext));
-
         mHandler.sendEmptyMessage(0);
-    }
-
-    //左边菜单界面控制新闻中心进行切换方法
-    public void switchView(int position) {
-        Toast.makeText(mContext, "新闻中心界面切换了" + position, Toast.LENGTH_SHORT).show();
-        BasePage basePage = mNewsCenterPages.get(position);
-        //添加view之前先清空所有界面，避免界面叠加
-        mNewsCenterFl.removeAllViews();
-        mNewsCenterFl.addView(basePage.getRootView());
     }
 
 //    public void initData() {
