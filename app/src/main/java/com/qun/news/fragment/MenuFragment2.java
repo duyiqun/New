@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.ListView;
 
 import com.qun.news.R;
+import com.qun.news.adapter.MenuAdapter;
 
 import java.util.List;
 
@@ -17,6 +18,7 @@ public class MenuFragment2 extends BaseFragment {
     private ListView mLvMenuNewsCenter;//新闻中心
     private ListView mLvMenuSmartService;//智慧服务
     private ListView mLvMenuGovaffairs;//政务指南
+    private MenuAdapter mNewsAdapter;
 
     @Override
     public View initView(LayoutInflater inflater) {
@@ -33,6 +35,11 @@ public class MenuFragment2 extends BaseFragment {
     }
 
     public void setMenuTitles(List<String> menuTitles) {
-        
+        if (mNewsAdapter == null) {
+            mNewsAdapter = new MenuAdapter(mContext, menuTitles);
+            mLvMenuNewsCenter.setAdapter(mNewsAdapter);
+        } else {
+            mNewsAdapter.notifyDataSetChanged();
+        }
     }
 }

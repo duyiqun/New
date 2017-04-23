@@ -1,6 +1,8 @@
 package com.qun.news.Home;
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.widget.TextView;
 
@@ -25,6 +27,16 @@ import okhttp3.Response;
  */
 
 public class NewsCenterPage extends BasePage {
+
+    private Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+//        MenuFragment menuFragment = new MenuFragment();
+            MenuFragment2 menuFragment = ((HomeActivity) mContext).getMenuFragment();
+            menuFragment.setMenuTitles(menuTitles);
+        }
+    };
 
     public NewsCenterPage(Context context) {
         super(context);
@@ -65,6 +77,8 @@ public class NewsCenterPage extends BasePage {
         });
     }
 
+    List<String> menuTitles = new ArrayList<>();//新闻中心左边的菜单列表标题数据
+
     private void parseGson(String json) {
 //        Gson gson = new Gson();
 //        NewsCenterBean newsCenterBean = gson.fromJson(json, NewsCenterBean.class);
@@ -76,14 +90,12 @@ public class NewsCenterPage extends BasePage {
         NewsCenterBean newsCenterBean = GsonTools.changeGsonToBean(json, NewsCenterBean.class);
 
         //封装标题数据，传递给左边菜单界面进行显示
-        List<String> menuTitles = new ArrayList<>();
+        menuTitles.clear();
         for (NewsCenterBean.DataBean dataBean : newsCenterBean.getData()) {
             menuTitles.add(dataBean.getTitle());
         }
 
-//        MenuFragment menuFragment = new MenuFragment();
-        MenuFragment2 menuFragment = ((HomeActivity) mContext).getMenuFragment();
-        menuFragment.setMenuTitles(menuTitles);
+        mHandler.sendEmptyMessage(0);
     }
 
 //    public void initData() {
