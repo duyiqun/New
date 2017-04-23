@@ -63,4 +63,8 @@ public class MenuFragment extends Fragment implements AdapterView.OnItemClickLis
             ((HomeActivity) getActivity()).switchFragment(fragment);
         }
     }
+
+    public void setMenuTitles(List<String> menuTitles) {
+
+    }
 }

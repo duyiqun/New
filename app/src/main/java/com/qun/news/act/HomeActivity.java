@@ -7,9 +7,11 @@ import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
 import com.qun.news.R;
 import com.qun.news.fragment.HomeFragment;
-import com.qun.news.fragment.MenuFragment;
+import com.qun.news.fragment.MenuFragment2;
 
 public class HomeActivity extends SlidingFragmentActivity {
+
+    private MenuFragment2 mMenuFragment;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -48,8 +50,8 @@ public class HomeActivity extends SlidingFragmentActivity {
 //        slidingMenu.setSecondaryShadowDrawable(R.drawable.shadow);
 
         //设置左边菜单界面
-        MenuFragment menuFragment = new MenuFragment();
-        getSupportFragmentManager().beginTransaction().replace(R.id.fl_menu, menuFragment).commit();
+        mMenuFragment = new MenuFragment2();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fl_menu, mMenuFragment).commit();
 
         //设置右边菜单界面
         HomeFragment homeFragment = new HomeFragment();
@@ -58,5 +60,9 @@ public class HomeActivity extends SlidingFragmentActivity {
 
     public void switchFragment(Fragment fragment) {
         getSupportFragmentManager().beginTransaction().replace(R.id.fl_content, fragment, "HOME").commit();
+    }
+
+    public MenuFragment2 getMenuFragment() {
+        return mMenuFragment;
     }
 }
