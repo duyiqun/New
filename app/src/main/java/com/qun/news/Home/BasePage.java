@@ -11,6 +11,7 @@ public abstract class BasePage {
 
     public Context mContext;
     private View mView;
+    public boolean isLoad = false;//用来记录每个页面是否加载过数据
 
     public BasePage(Context context) {
         this.mContext = context;

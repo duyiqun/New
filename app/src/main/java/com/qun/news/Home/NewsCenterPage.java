@@ -3,6 +3,7 @@ package com.qun.news.Home;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
@@ -11,6 +12,7 @@ import com.qun.news.bean.NewsCenterBean;
 import com.qun.news.fragment.MenuFragment2;
 import com.qun.news.utils.GsonTools;
 import com.qun.news.utils.HMAPI;
+import com.qun.news.utils.SpUtil;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -51,7 +53,13 @@ public class NewsCenterPage extends BasePage {
 
     @Override
     public void initData() {
+        //先从本地获取json如果有则展示，每次都获取一次最新的数据
+        String json = SpUtil.getString(mContext, HMAPI.NEW_CENTER, "");
+        if (!TextUtils.isEmpty(json)) {
+            parseGson(json);
+        }
         System.out.println("获取了新闻中心的数据");
+        System.out.println(json);
         getNetData();
     }
 
@@ -80,6 +88,10 @@ public class NewsCenterPage extends BasePage {
     List<String> menuTitles = new ArrayList<>();//新闻中心左边的菜单列表标题数据
 
     private void parseGson(String json) {
+        isLoad = true;
+        //将新闻中心数据缓存下来（一般使用数据库存数据），简单点使用sp了
+        SpUtil.saveString(mContext, HMAPI.NEW_CENTER, json);
+
 //        Gson gson = new Gson();
 //        NewsCenterBean newsCenterBean = gson.fromJson(json, NewsCenterBean.class);
 //        System.out.println(newsCenterBean);

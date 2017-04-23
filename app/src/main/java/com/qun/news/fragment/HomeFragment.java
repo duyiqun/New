@@ -180,7 +180,9 @@ public class HomeFragment extends BaseFragment implements LazyViewPager.OnPageCh
     @Override
     public void onPageSelected(int position) {
         BasePage basePage = mHomePages.get(position);
-        basePage.initData();
+        if (!basePage.isLoad) {
+            basePage.initData();
+        }
     }
 
     @Override
