@@ -4,9 +4,11 @@ import android.content.Context;
 import android.view.View;
 import android.widget.TextView;
 
-import com.qun.news.utils.HMAPI;
+import com.qun.news.bean.ArrayBean;
+import com.qun.news.utils.GsonTools;
 
 import java.io.IOException;
+import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -38,7 +40,8 @@ public class NewsCenterPage extends BasePage {
     }
 
     private void getNetData() {
-        Request request = new Request.Builder().url(HMAPI.NEW_CENTER).build();
+//        Request request = new Request.Builder().url(HMAPI.NEW_CENTER).build();
+        Request request = new Request.Builder().url("http://192.168.0.106:8080/Array_Json.json").build();
         OkHttpClient okHttpClient = new OkHttpClient();
         Call call = okHttpClient.newCall(request);
         call.enqueue(new Callback() {
@@ -53,8 +56,18 @@ public class NewsCenterPage extends BasePage {
             public void onResponse(Call call, Response response) throws IOException {
                 String json = response.body().string();
                 System.out.println(json);
+                parseGson(json);
             }
         });
+    }
+
+    private void parseGson(String json) {
+//        Gson gson = new Gson();
+//        NewsCenterBean newsCenterBean = gson.fromJson(json, NewsCenterBean.class);
+//        System.out.println(newsCenterBean);
+
+        List<ArrayBean> datas = GsonTools.changeGsonToList(json, ArrayBean.class);
+        System.out.println(datas.size());
     }
 
 //    public void initData() {
