@@ -189,4 +189,9 @@ public class HomeFragment extends BaseFragment implements LazyViewPager.OnPageCh
     public void onPageScrollStateChanged(int state) {
 
     }
+
+    public NewsCenterPage getNewsCenterPage() {
+        NewsCenterPage newsCenterPage = (NewsCenterPage) mHomePages.get(1);
+        return newsCenterPage;
+    }
 }
