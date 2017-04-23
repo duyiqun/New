@@ -5,7 +5,9 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.qun.news.Home.NewsCenterPage;
 import com.qun.news.R;
+import com.qun.news.act.HomeActivity;
 import com.qun.news.adapter.MenuAdapter;
 
 import java.util.List;
@@ -20,6 +22,12 @@ public class MenuFragment2 extends BaseFragment implements AdapterView.OnItemCli
     private ListView mLvMenuSmartService;//智慧服务
     private ListView mLvMenuGovaffairs;//政务指南
     private MenuAdapter mNewsAdapter;
+
+    public static final int TYPE_NEWS_CENTER = 0;//新闻中心的类型
+    public static final int TYPE_SMART_SERVICE = 1;//新闻中心的类型
+    public static final int TYPE_GOVER = 2;//新闻中心的类型
+
+    private int type = TYPE_NEWS_CENTER;
 
     @Override
     public View initView(LayoutInflater inflater) {
@@ -54,6 +62,11 @@ public class MenuFragment2 extends BaseFragment implements AdapterView.OnItemCli
                 mNewsAdapter.setClickPosition(position);
 //                mNewsAdapter.notifyDataSetChanged();
                 mSlidingMenu.toggle();
+
+                //根据点击的索引控制新闻中心进行界面切换
+//                NewsCenterPage newsCenterPage = new NewsCenterPage(mContext);
+                NewsCenterPage newsCenterPage = ((HomeActivity) mContext).getHomeFragment().getNewsCenterPage();
+                newsCenterPage.switchView(position);
                 break;
             case R.id.lv_menu_smart_service:
 
@@ -64,5 +77,10 @@ public class MenuFragment2 extends BaseFragment implements AdapterView.OnItemCli
             default:
                 break;
         }
+    }
+
+    public void setSmartTitles() {
+        //隐藏其他listview，显示智慧服务的listview并设置适配器即可
+
     }
 }
