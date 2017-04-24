@@ -24,6 +24,7 @@ public class NewsPage extends BasePage implements ViewPager.OnPageChangeListener
     private ViewPager mPager;
     private TabPageIndicator mIndicator;
     private int currentItem;//记录当前新闻子条目界面的索引
+    private List<BasePage> mNewsPages;
 
     public NewsPage(Context context, NewsCenterBean.DataBean dataBean) {
         super(context);
@@ -40,16 +41,19 @@ public class NewsPage extends BasePage implements ViewPager.OnPageChangeListener
 
     @Override
     public void initData() {
-        List<BasePage> newsPages = new ArrayList<>();
+        mNewsPages = new ArrayList<>();
         List<String> newsTitles = new ArrayList<>();
         for (NewsCenterBean.DataBean.ChildrenBean childrenBean : mDataBean.getChildren()) {
-            newsPages.add(new NewsItemPage(mContext));//viewpager中将要显示的页面对象集合
+            mNewsPages.add(new NewsItemPage(mContext, childrenBean.getUrl()));//viewpager中将要显示的页面对象集合
             newsTitles.add(childrenBean.getTitle());//新闻界面标题数据集合
         }
-        NewsAdapter newsAdapter = new NewsAdapter(mContext, newsPages, newsTitles);
+        NewsAdapter newsAdapter = new NewsAdapter(mContext, mNewsPages, newsTitles);
         mPager.setAdapter(newsAdapter);
         mIndicator.setViewPager(mPager);
         mIndicator.setOnPageChangeListener(this);
+
+        //第一次进入默认让第一个界面加载数据（北京）
+        mNewsPages.get(0).initData();
     }
 
     @Override
@@ -66,6 +70,9 @@ public class NewsPage extends BasePage implements ViewPager.OnPageChangeListener
             mSlidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_NONE);
         }
         currentItem = position;
+
+        BasePage basePage = mNewsPages.get(position);
+        basePage.initData();
     }
 
     @Override
