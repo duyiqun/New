@@ -41,8 +41,9 @@ public class NewsPage extends BasePage implements ViewPager.OnPageChangeListener
 
     @Override
     public void initData() {
+        //viewpager中将要显示的页面对象集合
         mNewsPages = new ArrayList<>();
-        List<String> newsTitles = new ArrayList<>();
+        List<String> newsTitles = new ArrayList<>();//新闻界面标题数据集合
         for (NewsCenterBean.DataBean.ChildrenBean childrenBean : mDataBean.getChildren()) {
             mNewsPages.add(new NewsItemPage(mContext, childrenBean.getUrl()));//viewpager中将要显示的页面对象集合
             newsTitles.add(childrenBean.getTitle());//新闻界面标题数据集合

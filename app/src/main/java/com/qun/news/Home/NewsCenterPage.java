@@ -100,7 +100,7 @@ public class NewsCenterPage extends BasePage {
         });
     }
 
-    List<String> menuTitles = new ArrayList<>();//新闻中心左边的菜单列表标题数据
+    private List<String> menuTitles = new ArrayList<>();//新闻中心左边的菜单列表标题数据
 
     private void parseGson(String json) {
         isLoad = true;
@@ -156,7 +156,7 @@ public class NewsCenterPage extends BasePage {
         }
     }
 
-    //    public void initData() {
+//    public void initData() {
 //        System.out.println("获取了新闻中心的数据");
 //    }
 }

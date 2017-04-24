@@ -36,7 +36,7 @@ public class NewsItemPage extends BasePage {
 
     @Override
     public void initData() {
-        final Request request = new Request.Builder().url(HMAPI.BASE_URL + this.mUrl).build();
+        Request request = new Request.Builder().url(HMAPI.BASE_URL + this.mUrl).build();
         OkHttpClient okHttpClient = new OkHttpClient();
         Call call = okHttpClient.newCall(request);
         call.enqueue(new Callback() {
