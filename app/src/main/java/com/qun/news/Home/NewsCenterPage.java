@@ -13,7 +13,7 @@ import com.qun.news.act.HomeActivity;
 import com.qun.news.bean.NewsCenterBean;
 import com.qun.news.fragment.MenuFragment2;
 import com.qun.news.menu.ActionPage;
-import com.qun.news.menu.NewPage;
+import com.qun.news.menu.NewsPage;
 import com.qun.news.menu.PicPage;
 import com.qun.news.menu.TopicPage;
 import com.qun.news.utils.GsonTools;
@@ -35,6 +35,8 @@ import okhttp3.Response;
  */
 
 public class NewsCenterPage extends BasePage {
+
+    private int index;//记录新闻中心当前显示的界面索引
 
     private Handler mHandler = new Handler() {
         @Override
@@ -122,7 +124,7 @@ public class NewsCenterPage extends BasePage {
 
         //创建出新闻中心的4个页面
         mNewsCenterPages = new ArrayList<>();
-        mNewsCenterPages.add(new NewPage(mContext, newsCenterBean.getData().get(0)));
+        mNewsCenterPages.add(new NewsPage(mContext, newsCenterBean.getData().get(0)));
         mNewsCenterPages.add(new TopicPage(mContext));
         mNewsCenterPages.add(new PicPage(mContext));
         mNewsCenterPages.add(new ActionPage(mContext));
@@ -132,6 +134,7 @@ public class NewsCenterPage extends BasePage {
 
     //左边菜单界面控制新闻中心进行切换方法
     public void switchView(int position) {
+        index = position;
         Toast.makeText(mContext, "新闻中心界面切换了" + position, Toast.LENGTH_SHORT).show();
         BasePage basePage = mNewsCenterPages.get(position);
         //添加view之前先清空所有界面，避免界面叠加
@@ -141,9 +144,19 @@ public class NewsCenterPage extends BasePage {
         mTxt_title.setText(menuTitles.get(position));
 
         basePage.initData();
+        basePage.onResume();
     }
 
-//    public void initData() {
+    @Override
+    public void onResume() {
+        super.onResume();
+        //先判断一下新闻中心中，哪一个界面正在显示（有4个页面可能会展示新闻，专题，主图，互动）
+        if (mNewsCenterPages != null && mNewsCenterPages.size() > 0) {
+            mNewsCenterPages.get(index).onResume();
+        }
+    }
+
+    //    public void initData() {
 //        System.out.println("获取了新闻中心的数据");
 //    }
 }

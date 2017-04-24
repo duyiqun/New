@@ -51,4 +51,9 @@ public abstract class BasePage {
         mImgbtn_right = view.findViewById(R.id.imgbtn_right);
         mImgbtn_right.setVisibility(View.GONE);
     }
+
+    //定义仿生命周期的方法
+    public void onResume() {
+
+    }
 }

@@ -3,6 +3,7 @@ package com.qun.news.menu;
 import android.content.Context;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.qun.news.Home.BasePage;
 
@@ -26,5 +27,11 @@ public class TopicPage extends BasePage {
     @Override
     public void initData() {
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Toast.makeText(mContext, "专题界面重新显示了", Toast.LENGTH_SHORT).show();
     }
 }

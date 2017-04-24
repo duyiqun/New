@@ -142,6 +142,9 @@ public class HomeFragment extends BaseFragment implements LazyViewPager.OnPageCh
                         //设置侧滑菜单为全屏模式
                         mSlidingMenu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
 
+                        //手动调用一下新闻中心的仿生命周期方法onResume();
+                        mHomePages.get(1).onResume();
+
                         //获取显示在屏幕上的新闻中心对象并获取数据显示才可以
 //                        NewsCenterPage newsCenterPage = new NewsCenterPage(mContext);
 //                        newsCenterPage.initData();
