@@ -60,6 +60,7 @@ public class NewsCenterPage extends BasePage {
     public View initView() {
         View view = View.inflate(mContext, R.layout.news_center_frame, null);
         mNewsCenterFl = (FrameLayout) view.findViewById(R.id.news_center_fl);
+        initTitleBar(view);
         return view;
     }
 
@@ -136,6 +137,8 @@ public class NewsCenterPage extends BasePage {
         //添加view之前先清空所有界面，避免界面叠加
         mNewsCenterFl.removeAllViews();
         mNewsCenterFl.addView(basePage.getRootView());
+
+        mTxt_title.setText(menuTitles.get(position));
     }
 
 //    public void initData() {
