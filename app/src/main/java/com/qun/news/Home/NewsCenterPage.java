@@ -122,7 +122,7 @@ public class NewsCenterPage extends BasePage {
 
         //创建出新闻中心的4个页面
         mNewsCenterPages = new ArrayList<>();
-        mNewsCenterPages.add(new NewPage(mContext));
+        mNewsCenterPages.add(new NewPage(mContext, newsCenterBean.getData().get(0)));
         mNewsCenterPages.add(new TopicPage(mContext));
         mNewsCenterPages.add(new PicPage(mContext));
         mNewsCenterPages.add(new ActionPage(mContext));
@@ -139,6 +139,8 @@ public class NewsCenterPage extends BasePage {
         mNewsCenterFl.addView(basePage.getRootView());
 
         mTxt_title.setText(menuTitles.get(position));
+
+        basePage.initData();
     }
 
 //    public void initData() {
