@@ -37,6 +37,8 @@ import okhttp3.Response;
 public class NewsCenterPage extends BasePage {
 
     private int index;//记录新闻中心当前显示的界面索引
+    private List<BasePage> mNewsCenterPages;
+    private FrameLayout mNewsCenterFl;
 
     private Handler mHandler = new Handler() {
         @Override
@@ -51,8 +53,6 @@ public class NewsCenterPage extends BasePage {
             menuFragment.setMenuTitles(menuTitles);
         }
     };
-    private List<BasePage> mNewsCenterPages;
-    private FrameLayout mNewsCenterFl;
 
     public NewsCenterPage(Context context) {
         super(context);

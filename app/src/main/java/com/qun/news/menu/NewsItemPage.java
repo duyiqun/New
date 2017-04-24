@@ -1,10 +1,15 @@
 package com.qun.news.menu;
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.widget.ListView;
 
 import com.qun.news.Home.BasePage;
+import com.qun.news.adapter.NewsItemAdapter;
+import com.qun.news.bean.NewsItemBean;
+import com.qun.news.utils.GsonTools;
 import com.qun.news.utils.HMAPI;
 
 import java.io.IOException;
@@ -22,6 +27,17 @@ import okhttp3.Response;
 public class NewsItemPage extends BasePage {
 
     private final String mUrl;//对应频道的接口地址
+    private ListView mLv;
+    private NewsItemBean mNewsItemBean;
+
+    private Handler mHandler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            NewsItemAdapter newsItemAdapter = new NewsItemAdapter(mContext, mNewsItemBean.getData().getNews());
+            mLv.setAdapter(newsItemAdapter);
+        }
+    };
 
     public NewsItemPage(Context context, String url) {
         super(context);
@@ -30,8 +46,8 @@ public class NewsItemPage extends BasePage {
 
     @Override
     public View initView() {
-        ListView lv = new ListView(mContext);
-        return lv;
+        mLv = new ListView(mContext);
+        return mLv;
     }
 
     @Override
@@ -49,7 +65,13 @@ public class NewsItemPage extends BasePage {
             public void onResponse(Call call, Response response) throws IOException {
                 String json = response.body().string();
                 System.out.println(json);
+                parseJson(json);
             }
         });
+    }
+
+    private void parseJson(String json) {
+        mNewsItemBean = GsonTools.changeGsonToBean(json, NewsItemBean.class);
+        mHandler.sendEmptyMessage(0);
     }
 }
