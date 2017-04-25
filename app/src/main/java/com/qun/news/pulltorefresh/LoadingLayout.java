@@ -108,7 +108,7 @@ public abstract class LoadingLayout extends FrameLayout implements ILoadingLayou
     /**
      * 设置加载中的图片
      *
-     * @param drawable 图片
+     * @param imageDrawable 图片
      */
     protected abstract void onLoadingDrawableSet(Drawable imageDrawable);
 
