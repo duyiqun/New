@@ -15,6 +15,7 @@ import com.qun.news.Home.BasePage;
 import com.qun.news.R;
 import com.qun.news.adapter.NewsItemAdapter;
 import com.qun.news.bean.NewsItemBean;
+import com.qun.news.pulltorefresh.PullToRefreshListView;
 import com.qun.news.utils.DensityUtil;
 import com.qun.news.utils.GsonTools;
 import com.qun.news.utils.HMAPI;
@@ -38,7 +39,7 @@ import okhttp3.Response;
 public class NewsItemPage extends BasePage {
 
     private final String mUrl;//对应频道的接口地址
-    private ListView mLv;
+    private PullToRefreshListView mLv;
     private NewsItemBean mNewsItemBean;
 
     private Handler mHandler = new Handler() {
@@ -65,13 +66,13 @@ public class NewsItemPage extends BasePage {
             mTopNewsViewpager.addView(rollViewPager);
 
             //如果头视图已经添加了就不再重复添加即可
-//            int headerViewsCount = mLv.getHeaderViewsCount();
-//            if(headerViewsCount==0){
-//                mLv.addHeaderView(mTopView);
-//            }
-            mLv.addHeaderView(mTopView);
+            int headerViewsCount = mLv.getRefreshableView().getHeaderViewsCount();
+            if(headerViewsCount==0){
+                mLv.getRefreshableView().addHeaderView(mTopView);
+            }
+//            mLv.getRefreshableView().addHeaderView(mTopView);
             NewsItemAdapter newsItemAdapter = new NewsItemAdapter(mContext, mNewsItemBean.getData().getNews());
-            mLv.setAdapter(newsItemAdapter);
+            mLv.getRefreshableView().setAdapter(newsItemAdapter);
         }
     };
     private LinearLayout mDotsLl;//专门显示小圆点的容器
@@ -110,7 +111,7 @@ public class NewsItemPage extends BasePage {
     public View initView() {
 //        mLv = new ListView(mContext);
         View view = View.inflate(mContext, R.layout.frag_item_news, null);
-        mLv = (ListView) view.findViewById(R.id.lv_item_news);
+        mLv = (PullToRefreshListView) view.findViewById(R.id.lv_item_news);
         //创建头视图view
         mTopView = View.inflate(mContext, R.layout.layout_roll_view, null);
 
@@ -155,7 +156,7 @@ public class NewsItemPage extends BasePage {
 
         SpUtil.saveString(mContext, HMAPI.BASE_URL + this.mUrl, json);
 
-        isLoad = true;
+//        isLoad = true;
         mNewsItemBean = GsonTools.changeGsonToBean(json, NewsItemBean.class);
 
         //封装标题

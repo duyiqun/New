@@ -73,9 +73,10 @@ public class NewsPage extends BasePage implements ViewPager.OnPageChangeListener
         currentItem = position;
 
         BasePage basePage = mNewsPages.get(position);
-        if (!basePage.isLoad) {
-            basePage.initData();
-        }
+//        if (!basePage.isLoad) {
+//            basePage.initData();
+//        }
+        basePage.initData();
     }
 
     @Override

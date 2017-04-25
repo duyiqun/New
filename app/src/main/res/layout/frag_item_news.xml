@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:background="#fff" >
 
-    <ListView
+    <com.qun.news.pulltorefresh.PullToRefreshListView
         android:id="@+id/lv_item_news"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
