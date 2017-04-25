@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.qun.news.R;
@@ -42,6 +43,7 @@ public class RollViewPager extends ViewPager {
         }
     };
     private int mStartX;
+    private long mDownTime;
 
     public RollViewPager(Context context) {
         this(context, null);
@@ -79,6 +81,7 @@ public class RollViewPager extends ViewPager {
             public boolean onTouch(View v, MotionEvent event) {
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
+                        mDownTime = System.currentTimeMillis();
                         mHandler.removeCallbacksAndMessages(null);
                         break;
                     case MotionEvent.ACTION_MOVE:
@@ -87,6 +90,15 @@ public class RollViewPager extends ViewPager {
                     case MotionEvent.ACTION_UP:
                         mHandler.sendEmptyMessageDelayed(0, 2000);
                         System.out.println("MotionEvent.ACTION_UP");
+                        long upTime = System.currentTimeMillis();
+                        if (upTime - mDownTime < 500) {//点击事件
+//                            Toast.makeText(getContext(), "热门新闻被点击了", Toast.LENGTH_SHORT).show();
+                        } else if (upTime - mDownTime < 2000) {
+//                            Toast.makeText(getContext(), "热门新闻被长按点击了", Toast.LENGTH_SHORT).show();
+                        }
+                        if (mOnItemClickListener != null) {
+                            mOnItemClickListener.onItemClick(RollViewPager.this.getCurrentItem());
+                        }
                         break;
                     case MotionEvent.ACTION_CANCEL://当触摸点离开控件或者，触摸事件被拦截时，cancel事件会执行，它一执行，up事件就不会执行了
                         System.out.println("MotionEvent.ACTION_CANCEL");
@@ -180,5 +192,15 @@ public class RollViewPager extends ViewPager {
                 break;
         }
         return super.dispatchTouchEvent(ev);
+    }
+
+    public interface onItemClickListener {
+        public void onItemClick(int position);
+    }
+
+    private onItemClickListener mOnItemClickListener;
+
+    public void setOnItemClickListener(onItemClickListener onItemClickListener) {
+        this.mOnItemClickListener = onItemClickListener;
     }
 }

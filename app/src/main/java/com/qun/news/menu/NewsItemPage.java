@@ -3,11 +3,13 @@ package com.qun.news.menu;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.qun.news.Home.BasePage;
 import com.qun.news.R;
@@ -16,6 +18,7 @@ import com.qun.news.bean.NewsItemBean;
 import com.qun.news.utils.DensityUtil;
 import com.qun.news.utils.GsonTools;
 import com.qun.news.utils.HMAPI;
+import com.qun.news.utils.SpUtil;
 import com.qun.news.view.RollViewPager;
 
 import java.io.IOException;
@@ -51,6 +54,12 @@ public class NewsItemPage extends BasePage {
             rollViewPager.setTitles(mTopNewsTitle, mNewPagerTitles);
             rollViewPager.setImages(mNewsPagerImages);
             rollViewPager.setDots(dots);
+            rollViewPager.setOnItemClickListener(new RollViewPager.onItemClickListener() {
+                @Override
+                public void onItemClick(int position) {
+                    Toast.makeText(mContext, ("热门新闻被点击了" + position), Toast.LENGTH_SHORT).show();
+                }
+            });
             rollViewPager.start();
 
             mTopNewsViewpager.addView(rollViewPager);
@@ -113,6 +122,14 @@ public class NewsItemPage extends BasePage {
 
     @Override
     public void initData() {
+        String json = SpUtil.getString(mContext, HMAPI.BASE_URL + this.mUrl, "");
+        if(!TextUtils.isEmpty(json)){
+            parseJson(json);
+        }
+        getNetData();
+    }
+
+    private void getNetData() {
         Request request = new Request.Builder().url(HMAPI.BASE_URL + this.mUrl).build();
         OkHttpClient okHttpClient = new OkHttpClient();
         Call call = okHttpClient.newCall(request);
@@ -135,6 +152,9 @@ public class NewsItemPage extends BasePage {
     List<String> mNewsPagerImages = new ArrayList<>();
 
     private void parseJson(String json) {
+
+        SpUtil.saveString(mContext, HMAPI.BASE_URL + this.mUrl, json);
+
         isLoad = true;
         mNewsItemBean = GsonTools.changeGsonToBean(json, NewsItemBean.class);
 
