@@ -6,6 +6,7 @@ import android.os.Message;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -69,6 +70,32 @@ public class RollViewPager extends ViewPager {
             @Override
             public void onPageScrollStateChanged(int state) {
 
+            }
+        });
+
+        this.setOnTouchListener(new OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        mHandler.removeCallbacksAndMessages(null);
+                        break;
+                    case MotionEvent.ACTION_MOVE:
+
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        mHandler.sendEmptyMessageDelayed(0, 2000);
+                        System.out.println("MotionEvent.ACTION_UP");
+                        break;
+                    case MotionEvent.ACTION_CANCEL://当触摸点离开控件或者，触摸事件被拦截时，cancel事件会执行，它一执行，up事件就不会执行了
+                        System.out.println("MotionEvent.ACTION_CANCEL");
+                        mHandler.sendEmptyMessageDelayed(0, 2000);
+                        break;
+                    default:
+                        break;
+                }
+
+                return false;
             }
         });
     }
