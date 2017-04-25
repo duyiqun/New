@@ -1,6 +1,8 @@
 package com.qun.news.view;
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
@@ -26,6 +28,18 @@ public class RollViewPager extends ViewPager {
     private RollAdapter mRollAdapter;
     private List<ImageView> mDots;
     private int previousPosition;
+
+    private Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+
+            int currentItem = RollViewPager.this.getCurrentItem();
+            RollViewPager.this.setCurrentItem((currentItem + 1) % titles.size(), false);
+
+            mHandler.sendEmptyMessageDelayed(0, 2000);
+        }
+    };
 
     public RollViewPager(Context context) {
         this(context, null);
@@ -79,6 +93,8 @@ public class RollViewPager extends ViewPager {
         } else {
             mRollAdapter.notifyDataSetChanged();
         }
+
+        mHandler.sendEmptyMessageDelayed(0, 2000);
     }
 
     public void setDots(List<ImageView> dots) {
