@@ -48,7 +48,12 @@ public class NewsItemPage extends BasePage {
 
             //创建出专门用于显示轮播图效果的控件
             RollViewPager rollViewPager = new RollViewPager(mContext);
-            rollViewPager.setTitles(mTopNewsTitle,mNewPagerTitles);
+            rollViewPager.setTitles(mTopNewsTitle, mNewPagerTitles);
+            rollViewPager.setImages(mNewsPagerImages);
+            rollViewPager.start();
+
+            mTopNewsViewpager.addView(rollViewPager);
+
             mLv.addHeaderView(mTopView);
             NewsItemAdapter newsItemAdapter = new NewsItemAdapter(mContext, mNewsItemBean.getData().getNews());
             mLv.setAdapter(newsItemAdapter);
@@ -57,6 +62,7 @@ public class NewsItemPage extends BasePage {
     private LinearLayout mDotsLl;//专门显示小圆点的容器
     private List<ImageView> dots = new ArrayList<>();
     private TextView mTopNewsTitle;//用来显示轮播图的标题
+    private LinearLayout mTopNewsViewpager;//用来显示轮播图的容器
 
     private void initDots(int size) {
         mDotsLl.removeAllViews();
@@ -95,6 +101,7 @@ public class NewsItemPage extends BasePage {
 
         mDotsLl = (LinearLayout) mTopView.findViewById(R.id.dots_ll);
         mTopNewsTitle = (TextView) mTopView.findViewById(R.id.top_news_title);
+        mTopNewsViewpager = (LinearLayout) mTopView.findViewById(R.id.top_news_viewpager);
         return mLv;
     }
 
@@ -119,14 +126,19 @@ public class NewsItemPage extends BasePage {
     }
 
     List<String> mNewPagerTitles = new ArrayList<>();
+    List<String> mNewsPagerImages = new ArrayList<>();
 
     private void parseJson(String json) {
+        isLoad = true;
         mNewsItemBean = GsonTools.changeGsonToBean(json, NewsItemBean.class);
 
         //封装标题
+        //封装图片
         mNewPagerTitles.clear();
+        mNewsPagerImages.clear();
         for (NewsItemBean.DataBean.TopnewsBean topnewsBean : mNewsItemBean.getData().getTopnews()) {
             mNewPagerTitles.add(topnewsBean.getTitle());
+            mNewsPagerImages.add(topnewsBean.getTopimage());
         }
 
         mHandler.sendEmptyMessage(0);
