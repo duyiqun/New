@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.qun.news.Home.BasePage;
 import com.qun.news.R;
@@ -18,6 +19,8 @@ import com.qun.news.utils.HMAPI;
 import com.qun.news.view.RollViewPager;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -45,20 +48,33 @@ public class NewsItemPage extends BasePage {
 
             //创建出专门用于显示轮播图效果的控件
             RollViewPager rollViewPager = new RollViewPager(mContext);
+            rollViewPager.setTitles(mTopNewsTitle,mNewPagerTitles);
             mLv.addHeaderView(mTopView);
             NewsItemAdapter newsItemAdapter = new NewsItemAdapter(mContext, mNewsItemBean.getData().getNews());
             mLv.setAdapter(newsItemAdapter);
         }
     };
     private LinearLayout mDotsLl;//专门显示小圆点的容器
+    private List<ImageView> dots = new ArrayList<>();
+    private TextView mTopNewsTitle;//用来显示轮播图的标题
 
     private void initDots(int size) {
+        mDotsLl.removeAllViews();
+        dots.clear();
         //将小圆点创建并添加到轮播图中显示
         for (int i = 0; i < size; i++) {
             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(DensityUtil.dip2px(mContext, 5), DensityUtil.dip2px(mContext, 5));
             ImageView point = new ImageView(mContext);
-            point.setImageResource(R.mipmap.dot_normal);
+
+            if (i == 0) {
+                point.setImageResource(R.mipmap.dot_focus);
+            } else {
+                layoutParams.leftMargin = DensityUtil.dip2px(mContext, 5);
+                point.setImageResource(R.mipmap.dot_normal);
+            }
+            point.setLayoutParams(layoutParams);
             mDotsLl.addView(point);
+            dots.add(point);
         }
     }
 
@@ -78,6 +94,7 @@ public class NewsItemPage extends BasePage {
         mTopView = View.inflate(mContext, R.layout.layout_roll_view, null);
 
         mDotsLl = (LinearLayout) mTopView.findViewById(R.id.dots_ll);
+        mTopNewsTitle = (TextView) mTopView.findViewById(R.id.top_news_title);
         return mLv;
     }
 
@@ -101,8 +118,16 @@ public class NewsItemPage extends BasePage {
         });
     }
 
+    List<String> mNewPagerTitles = new ArrayList<>();
+
     private void parseJson(String json) {
         mNewsItemBean = GsonTools.changeGsonToBean(json, NewsItemBean.class);
+
+        //封装标题
+        mNewPagerTitles.clear();
+        for (NewsItemBean.DataBean.TopnewsBean topnewsBean : mNewsItemBean.getData().getTopnews()) {
+            mNewPagerTitles.add(topnewsBean.getTitle());
+        }
 
         mHandler.sendEmptyMessage(0);
     }
