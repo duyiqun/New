@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.qun.news.R;
 
 import java.util.List;
 
@@ -23,13 +24,39 @@ public class RollViewPager extends ViewPager {
     private List<String> titles;
     private List<String> images;
     private RollAdapter mRollAdapter;
+    private List<ImageView> mDots;
+    private int previousPosition;
 
     public RollViewPager(Context context) {
-        super(context);
+        this(context, null);
     }
 
     public RollViewPager(Context context, AttributeSet attrs) {
         super(context, attrs);
+        init();
+    }
+
+    private void init() {
+        this.addOnPageChangeListener(new OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                //点变化，标题变化
+                titleText.setText(titles.get(position));
+                mDots.get(previousPosition).setImageResource(R.mipmap.dot_normal);
+                previousPosition = position;
+                mDots.get(position).setImageResource(R.mipmap.dot_focus);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
     //动态传递数据并设置默认第一个标题
@@ -52,6 +79,10 @@ public class RollViewPager extends ViewPager {
         } else {
             mRollAdapter.notifyDataSetChanged();
         }
+    }
+
+    public void setDots(List<ImageView> dots) {
+        this.mDots = dots;
     }
 
     private class RollAdapter extends PagerAdapter {

@@ -50,10 +50,16 @@ public class NewsItemPage extends BasePage {
             RollViewPager rollViewPager = new RollViewPager(mContext);
             rollViewPager.setTitles(mTopNewsTitle, mNewPagerTitles);
             rollViewPager.setImages(mNewsPagerImages);
+            rollViewPager.setDots(dots);
             rollViewPager.start();
 
             mTopNewsViewpager.addView(rollViewPager);
 
+            //如果头视图已经添加了就不再重复添加即可
+//            int headerViewsCount = mLv.getHeaderViewsCount();
+//            if(headerViewsCount==0){
+//                mLv.addHeaderView(mTopView);
+//            }
             mLv.addHeaderView(mTopView);
             NewsItemAdapter newsItemAdapter = new NewsItemAdapter(mContext, mNewsItemBean.getData().getNews());
             mLv.setAdapter(newsItemAdapter);
