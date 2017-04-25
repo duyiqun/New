@@ -41,6 +41,7 @@ public class RollViewPager extends ViewPager {
             mHandler.sendEmptyMessageDelayed(0, 2000);
         }
     };
+    private int mStartX;
 
     public RollViewPager(Context context) {
         this(context, null);
@@ -114,7 +115,6 @@ public class RollViewPager extends ViewPager {
     public void start() {
         //设置适配器即可
         if (mRollAdapter == null) {
-
             mRollAdapter = new RollAdapter();
             this.setAdapter(mRollAdapter);
         } else {
@@ -153,5 +153,32 @@ public class RollViewPager extends ViewPager {
         public void destroyItem(ViewGroup container, int position, Object object) {
             container.removeView((View) object);
         }
+    }
+
+    //事件分发
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+//        requestDisallowInterceptTouchEvent(true);//请求rollviewpager的父控件不拦截触摸事件
+//        requestDisallowInterceptTouchEvent(false);//不请求rollviewpager的父控件不拦截触摸事件，（父控件默认操作，想拦截就拦截）
+
+//        //如果当前的索引不是0
+//        if (this.getCurrentItem() != 0) {
+//            requestDisallowInterceptTouchEvent(true);
+//        }
+
+        //如果当前的索引不是0,并且是右滑时才请求父控件不拦截
+        switch (ev.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                mStartX = (int) ev.getRawX();
+                break;
+            case MotionEvent.ACTION_MOVE:
+                int endX = (int) ev.getRawX();
+                int diffX = endX - mStartX;
+                if (diffX > 0 && this.getCurrentItem() != 0) {
+                    requestDisallowInterceptTouchEvent(true);
+                }
+                break;
+        }
+        return super.dispatchTouchEvent(ev);
     }
 }
