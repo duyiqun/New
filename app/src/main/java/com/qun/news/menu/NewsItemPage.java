@@ -4,13 +4,18 @@ import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.qun.news.Home.BasePage;
+import com.qun.news.R;
 import com.qun.news.adapter.NewsItemAdapter;
 import com.qun.news.bean.NewsItemBean;
+import com.qun.news.utils.DensityUtil;
 import com.qun.news.utils.GsonTools;
 import com.qun.news.utils.HMAPI;
+import com.qun.news.view.RollViewPager;
 
 import java.io.IOException;
 
@@ -30,14 +35,34 @@ public class NewsItemPage extends BasePage {
     private ListView mLv;
     private NewsItemBean mNewsItemBean;
 
-    private Handler mHandler = new Handler(){
+    private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
+
+            //动态创建小圆点
+            initDots(mNewsItemBean.getData().getTopnews().size());
+
+            //创建出专门用于显示轮播图效果的控件
+            RollViewPager rollViewPager = new RollViewPager(mContext);
+            mLv.addHeaderView(mTopView);
             NewsItemAdapter newsItemAdapter = new NewsItemAdapter(mContext, mNewsItemBean.getData().getNews());
             mLv.setAdapter(newsItemAdapter);
         }
     };
+    private LinearLayout mDotsLl;//专门显示小圆点的容器
+
+    private void initDots(int size) {
+        //将小圆点创建并添加到轮播图中显示
+        for (int i = 0; i < size; i++) {
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(DensityUtil.dip2px(mContext, 5), DensityUtil.dip2px(mContext, 5));
+            ImageView point = new ImageView(mContext);
+            point.setImageResource(R.mipmap.dot_normal);
+            mDotsLl.addView(point);
+        }
+    }
+
+    private View mTopView;//用于显示轮播图头视图
 
     public NewsItemPage(Context context, String url) {
         super(context);
@@ -46,7 +71,13 @@ public class NewsItemPage extends BasePage {
 
     @Override
     public View initView() {
-        mLv = new ListView(mContext);
+//        mLv = new ListView(mContext);
+        View view = View.inflate(mContext, R.layout.frag_item_news, null);
+        mLv = (ListView) view.findViewById(R.id.lv_item_news);
+        //创建头视图view
+        mTopView = View.inflate(mContext, R.layout.layout_roll_view, null);
+
+        mDotsLl = (LinearLayout) mTopView.findViewById(R.id.dots_ll);
         return mLv;
     }
 
@@ -72,6 +103,7 @@ public class NewsItemPage extends BasePage {
 
     private void parseJson(String json) {
         mNewsItemBean = GsonTools.changeGsonToBean(json, NewsItemBean.class);
+
         mHandler.sendEmptyMessage(0);
     }
 }
