@@ -37,6 +37,10 @@ public class NewsAdapter extends PagerAdapter {
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
+        View view = mDatas.get(position).getRootView();
+        if (view.getParent() != null) {
+            ((ViewGroup) view.getParent()).removeView(view);
+        }
         container.addView(mDatas.get(position).getRootView());
         return mDatas.get(position).getRootView();
     }
