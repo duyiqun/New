@@ -49,24 +49,31 @@ public class NewsItemPage extends BasePage {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            if (isReFresh) {
+            if (isReFresh) {//只有下拉刷新时，才进行热门新闻的操作
                 //动态创建小圆点
                 initDots(mNewsItemBean.getData().getTopnews().size());
 
+                //在下拉刷新时，先将前一个消息循环清除再start
+                if (mRollViewPager != null) {
+                    mRollViewPager.stop();
+                }
+
                 //创建出专门用于显示轮播图效果的控件
-                RollViewPager rollViewPager = new RollViewPager(mContext);
-                rollViewPager.setTitles(mTopNewsTitle, mNewPagerTitles);
-                rollViewPager.setImages(mNewsPagerImages);
-                rollViewPager.setDots(dots);
-                rollViewPager.setOnItemClickListener(new RollViewPager.onItemClickListener() {
+                mRollViewPager = new RollViewPager(mContext);
+                mRollViewPager.setTitles(mTopNewsTitle, mNewPagerTitles);
+                mRollViewPager.setImages(mNewsPagerImages);
+                mRollViewPager.setDots(dots);
+                mRollViewPager.setOnItemClickListener(new RollViewPager.onItemClickListener() {
                     @Override
                     public void onItemClick(int position) {
                         Toast.makeText(mContext, ("热门新闻被点击了" + position), Toast.LENGTH_SHORT).show();
                     }
                 });
-                rollViewPager.start();
+                mRollViewPager.start();
 
-                mTopNewsViewpager.addView(rollViewPager);
+                //先删除之前的轮播图，再添加一个新的
+                mTopNewsViewpager.removeAllViews();
+                mTopNewsViewpager.addView(mRollViewPager);
             }
 
 
@@ -87,13 +94,13 @@ public class NewsItemPage extends BasePage {
             mLv.onPullDownRefreshComplete();//通知下拉刷新结束了
         }
     };
-
     private LinearLayout mDotsLl;//专门显示小圆点的容器
     private List<ImageView> dots = new ArrayList<>();
     private TextView mTopNewsTitle;//用来显示轮播图的标题
     private LinearLayout mTopNewsViewpager;//用来显示轮播图的容器
     private NewsItemAdapter mNewsItemAdapter;
     private String mMoreUrl;//由于json数据中只有一个字段来获取新数据，下拉刷新与加载更多都使用这个地址
+    private RollViewPager mRollViewPager;
 
     private void initDots(int size) {
         mDotsLl.removeAllViews();
@@ -143,13 +150,23 @@ public class NewsItemPage extends BasePage {
             //下拉刷新操作
             @Override
             public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
-                getNetData(true, mMoreUrl);
+                if (TextUtils.isEmpty(mMoreUrl)) {
+                    Toast.makeText(mContext, "没有下拉刷新的新数据了", Toast.LENGTH_SHORT).show();
+                    mLv.onPullDownRefreshComplete();
+                } else {
+                    getNetData(true, mMoreUrl);
+                }
             }
 
             //加载更多操作
             @Override
             public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
-                getNetData(false, mMoreUrl);
+                if (TextUtils.isEmpty(mMoreUrl)) {
+                    Toast.makeText(mContext, "没有加载更多的新数据了", Toast.LENGTH_SHORT).show();
+                    mLv.onPullUpRefreshComplete();
+                } else {
+                    getNetData(false, mMoreUrl);
+                }
             }
         });
         return mLv;
