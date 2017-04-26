@@ -124,10 +124,10 @@ public class NewsCenterPage extends BasePage {
 
         //创建出新闻中心的4个页面
         mNewsCenterPages = new ArrayList<>();
-        mNewsCenterPages.add(new NewsPage(mContext, newsCenterBean.getData().get(0)));
-        mNewsCenterPages.add(new TopicPage(mContext));
-        mNewsCenterPages.add(new PicPage(mContext));
-        mNewsCenterPages.add(new ActionPage(mContext));
+        mNewsCenterPages.add(new NewsPage(mContext, newsCenterBean.getData().get(0)));//新闻
+        mNewsCenterPages.add(new TopicPage(mContext));//专题
+        mNewsCenterPages.add(new PicPage(mContext));//组图
+        mNewsCenterPages.add(new ActionPage(mContext));//互动
 
         mHandler.sendEmptyMessage(0);
     }

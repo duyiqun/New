@@ -43,7 +43,7 @@ public class NewsItemPage extends BasePage {
 
     private final String mUrl;//对应频道的接口地址
     private PullToRefreshListView mLv;
-    private NewsItemBean mNewsItemBean;
+
 
     private List<NewsItemBean.DataBean.NewsBean> news = new ArrayList<>();//用来记录新闻列表数据集合
     private boolean isReFresh;
@@ -77,7 +77,6 @@ public class NewsItemPage extends BasePage {
                 mTopNewsViewpager.removeAllViews();
                 mTopNewsViewpager.addView(mRollViewPager);
             }
-
 
             //如果头视图已经添加了就不再重复添加即可
             int headerViewsCount = mLv.getRefreshableView().getHeaderViewsCount();
@@ -135,6 +134,7 @@ public class NewsItemPage extends BasePage {
         }
     }
 
+    private NewsItemBean mNewsItemBean;
     private View mTopView;//用于显示轮播图头视图
 
     public NewsItemPage(Context context, String url) {
@@ -182,7 +182,7 @@ public class NewsItemPage extends BasePage {
                 }
             }
         });
-        return mLv;
+        return view;
     }
 
     @Override

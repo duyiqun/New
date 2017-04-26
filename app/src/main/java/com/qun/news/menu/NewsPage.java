@@ -25,6 +25,7 @@ public class NewsPage extends BasePage implements ViewPager.OnPageChangeListener
     private TabPageIndicator mIndicator;
     private int currentItem;//记录当前新闻子条目界面的索引
     private List<BasePage> mNewsPages;
+    private NewsAdapter mNewsAdapter;
 
     public NewsPage(Context context, NewsCenterBean.DataBean dataBean) {
         super(context);
@@ -48,8 +49,12 @@ public class NewsPage extends BasePage implements ViewPager.OnPageChangeListener
             mNewsPages.add(new NewsItemPage(mContext, childrenBean.getUrl()));//viewpager中将要显示的页面对象集合
             newsTitles.add(childrenBean.getTitle());//新闻界面标题数据集合
         }
-        NewsAdapter newsAdapter = new NewsAdapter(mContext, mNewsPages, newsTitles);
-        mPager.setAdapter(newsAdapter);
+        if (mNewsAdapter == null) {
+            mNewsAdapter = new NewsAdapter(mContext, mNewsPages, newsTitles);
+            mPager.setAdapter(mNewsAdapter);
+        } else {
+            mNewsAdapter.notifyDataSetChanged();
+        }
         mIndicator.setViewPager(mPager);
         mIndicator.setOnPageChangeListener(this);
 
