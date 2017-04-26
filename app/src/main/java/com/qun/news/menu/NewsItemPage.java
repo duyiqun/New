@@ -24,7 +24,9 @@ import com.qun.news.utils.SpUtil;
 import com.qun.news.view.RollViewPager;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import okhttp3.Call;
@@ -92,8 +94,19 @@ public class NewsItemPage extends BasePage {
             //刷新完毕后要通知控件刷新完成
             mLv.onPullUpRefreshComplete();//通过加载更多结束了
             mLv.onPullDownRefreshComplete();//通知下拉刷新结束了
+            if (isReFresh) {
+                String currentTime = getCurrentTime();
+                SpUtil.saveString(mContext, "LastUpdatedLabel", currentTime);
+                mLv.setLastUpdatedLabel(currentTime);
+            }
         }
     };
+
+    private String getCurrentTime() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return sdf.format(new Date());
+    }
+
     private LinearLayout mDotsLl;//专门显示小圆点的容器
     private List<ImageView> dots = new ArrayList<>();
     private TextView mTopNewsTitle;//用来显示轮播图的标题
@@ -179,6 +192,10 @@ public class NewsItemPage extends BasePage {
             parseJson(json, true);
         }
         getNetData(true, this.mUrl);
+
+        //如果本地有更新时间就展示一下即可
+        String lastUpdatedLabel = SpUtil.getString(mContext, "LastUpdatedLabel", "");
+        mLv.setLastUpdatedLabel(lastUpdatedLabel);
     }
 
     /**
