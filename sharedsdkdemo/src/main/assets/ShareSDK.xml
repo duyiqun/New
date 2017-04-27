@@ -55,6 +55,20 @@
     
     <ShareSDK 
         AppKey = "1d6849553e72c"/> <!-- androidv1101 修改成你在sharesdk后台注册的应用的appkey"-->//
+
+	<!--<ShareSDK     AppKey="填写您在ShareSDK上注册到的AppKey" />-->
+	<!--&lt;!&ndash; -->
+    <!--注：2.8.2版本以上（含2.8.2），此文件默认不配置ShareSDK的AppKey，-->
+    <!--改在代码里初始化的时候调用此方法MobSDK.init(Context context, String appkey);建议放在程序启动的时候执行此方法 -->
+    <!--&ndash;&gt;-->
+	<!--<SinaWeibo-->
+		<!--SortId="此平台在您分享列表中的位置，整型，数值越大越靠后"-->
+		<!--AppKey="填写您在新浪微博上注册到的AppKey"-->
+		<!--AppSecret="填写您在新浪微博上注册到的AppSecret"-->
+		<!--Id="自定义字段，整型，用于您项目中对此平台的识别符"-->
+		<!--RedirectUrl="填写您在新浪微博上注册的RedirectUrl"-->
+		<!--ShareByAppClient="是否使用客户端进行分享"-->
+		<!--Enable="布尔值，标记此平台是否有效" />-->
     
     <!-- ShareByAppClient标识是否使用微博客户端分享，默认是false -->
     <SinaWeibo
