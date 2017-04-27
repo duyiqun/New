@@ -120,6 +120,8 @@ public class NewsItemBean {
             private String type;
             private String url;
 
+            public boolean isRead = false;//用来记录已读状态
+
             public boolean isComment() {
                 return comment;
             }

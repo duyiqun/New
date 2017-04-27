@@ -1,10 +1,12 @@
 package com.qun.news.menu;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -13,6 +15,7 @@ import android.widget.Toast;
 
 import com.qun.news.Home.BasePage;
 import com.qun.news.R;
+import com.qun.news.act.DetailActivity;
 import com.qun.news.adapter.NewsItemAdapter;
 import com.qun.news.bean.NewsItemBean;
 import com.qun.news.pulltorefresh.PullToRefreshBase;
@@ -39,7 +42,7 @@ import okhttp3.Response;
  * Created by Qun on 2017/4/24.
  */
 
-public class NewsItemPage extends BasePage {
+public class NewsItemPage extends BasePage implements AdapterView.OnItemClickListener {
 
     private final String mUrl;//对应频道的接口地址
     private PullToRefreshListView mLv;
@@ -182,6 +185,10 @@ public class NewsItemPage extends BasePage {
                 }
             }
         });
+
+        //设置条目点击事件
+        mLv.getRefreshableView().setOnItemClickListener(this);
+
         return view;
     }
 
@@ -261,5 +268,24 @@ public class NewsItemPage extends BasePage {
         mMoreUrl = mNewsItemBean.getData().getMore();
 
         mHandler.sendEmptyMessage(0);
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        //根据索引得到对应条目的bean对象，记录已读状态
+        //方式一
+//        int headerViewsCount = mLv.getRefreshableView().getHeaderViewsCount();
+//        NewsItemBean.DataBean.NewsBean newsBean = news.get(position - headerViewsCount);
+//        newsBean.isRead = true;
+//        mNewsItemAdapter.notifyDataSetChanged();
+        //方式二
+        NewsItemBean.DataBean.NewsBean newsBean = (NewsItemBean.DataBean.NewsBean) mLv.getRefreshableView().getItemAtPosition(position);
+        newsBean.isRead = true;
+        mNewsItemAdapter.notifyDataSetChanged();
+
+        //进入新闻详情界面
+        Intent intent = new Intent(mContext, DetailActivity.class);
+        intent.putExtra("url", newsBean.getUrl());
+        mContext.startActivity(intent);
     }
 }

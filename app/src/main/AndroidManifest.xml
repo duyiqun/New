@@ -26,6 +26,8 @@
             android:name=".act.HomeActivity"
             android:theme="@style/Theme.PageIndicatorDefaults">
         </activity>
+        <activity android:name=".act.DetailActivity">
+        </activity>
     </application>
 
 </manifest>

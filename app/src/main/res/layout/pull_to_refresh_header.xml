@@ -69,4 +69,5 @@
             android:indeterminateDrawable="@anim/update_loading_progressbar_anim"
             android:visibility="invisible"/>
     </RelativeLayout>
+
 </LinearLayout>

@@ -159,7 +159,7 @@ public class RollViewPager extends ViewPager {
         public Object instantiateItem(ViewGroup container, int position) {
             ImageView iv = new ImageView(getContext());
             iv.setScaleType(ImageView.ScaleType.FIT_XY);//glide默认使用src设置图片，设置缩放模式为fitxy即可
-            Glide.with(getContext()).load(images.get(position)).into(iv);
+            Glide.with(getContext().getApplicationContext()).load(images.get(position)).into(iv);
             container.addView(iv);
             return iv;
         }
@@ -198,7 +198,7 @@ public class RollViewPager extends ViewPager {
     }
 
     public interface onItemClickListener {
-        public void onItemClick(int position);
+        void onItemClick(int position);
     }
 
     private onItemClickListener mOnItemClickListener;

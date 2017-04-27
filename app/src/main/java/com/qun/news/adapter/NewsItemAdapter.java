@@ -1,6 +1,7 @@
 package com.qun.news.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -39,6 +40,11 @@ public class NewsItemAdapter extends MyBaseAdapter<NewsItemBean.DataBean.NewsBea
         holder.tv_title.setText(newsBean.getTitle());
         holder.tv_date.setText(newsBean.getPubdate());
         Glide.with(mContext.getApplicationContext()).load(newsBean.getListimage()).into(holder.iv);
+        if (newsBean.isRead) {
+            holder.tv_title.setTextColor(Color.RED);
+        } else {
+            holder.tv_title.setTextColor(Color.BLACK);
+        }
         return convertView;
     }
 
