@@ -1,9 +1,12 @@
 package com.qun.news360demo;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.google.gson.Gson;
@@ -16,7 +19,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     private ListView mListView;
     private Handler mHandler = new Handler() {
@@ -41,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mListView = (ListView) findViewById(R.id.lv);
+        mListView.setOnItemClickListener(this);
         initData();
     }
 
@@ -65,5 +69,13 @@ public class MainActivity extends AppCompatActivity {
                 mHandler.sendEmptyMessage(0);
             }
         });
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        JsonBean.DataBean itemAtPosition = (JsonBean.DataBean) mListView.getItemAtPosition(position);
+        Intent intent = new Intent(MainActivity.this, DetailActivity.class);
+        intent.putExtra("url", itemAtPosition.getWeburl());
+        startActivity(intent);
     }
 }
