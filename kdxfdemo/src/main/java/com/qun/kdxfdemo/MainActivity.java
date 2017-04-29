@@ -6,6 +6,7 @@ import android.view.View;
 
 import com.iflytek.speech.RecognizerResult;
 import com.iflytek.speech.SpeechError;
+import com.iflytek.speech.SynthesizerPlayer;
 import com.iflytek.ui.RecognizerDialog;
 import com.iflytek.ui.RecognizerDialogListener;
 
@@ -21,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
-    public void recognize(View view) {
+    public void recognizeSpeech(View view) {
         RecognizerDialog recognizerDialog = new RecognizerDialog(MainActivity.this, "appid=5212ef0a");
         recognizerDialog.setListener(new RecognizerDialogListener() {
             //当有识别结果就进行返回
@@ -43,7 +44,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         recognizerDialog.show();
+    }
 
-
+    public void voiceBroadcast(View view) {
+        SynthesizerPlayer synthesizerPlayer = SynthesizerPlayer.createSynthesizerPlayer(MainActivity.this,
+                "appid=5212ef0a");
+        synthesizerPlayer.setVoiceName("vixyun");
+        synthesizerPlayer.playText("你瞅啥，瞅你咋滴，信不信削你！！",null,null);
     }
 }
