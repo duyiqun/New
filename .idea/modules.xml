@@ -8,6 +8,7 @@
       <module fileurl="file://$PROJECT_DIR$/ViewPagerIndicator/ViewPagerIndicator.iml" filepath="$PROJECT_DIR$/ViewPagerIndicator/ViewPagerIndicator.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/jpushdemo/jpushdemo.iml" filepath="$PROJECT_DIR$/jpushdemo/jpushdemo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/jrttdemo/jrttdemo.iml" filepath="$PROJECT_DIR$/jrttdemo/jrttdemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/kdxfdemo/kdxfdemo.iml" filepath="$PROJECT_DIR$/kdxfdemo/kdxfdemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/news360demo/news360demo.iml" filepath="$PROJECT_DIR$/news360demo/news360demo.iml" />
       <module fileurl="file://$PROJECT_DIR$/sharedsdkdemo/sharedsdkdemo.iml" filepath="$PROJECT_DIR$/sharedsdkdemo/sharedsdkdemo.iml" />
