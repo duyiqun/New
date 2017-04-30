@@ -15,7 +15,7 @@ import android.widget.ImageView;
  * Created by Qun on 2017/4/30.
  */
 
-class ListItemView extends FrameLayout{
+class ListItemView extends FrameLayout {
 
     private ImageView mIvPlay;
     private MyVideoView mMyVideoView;
@@ -39,13 +39,13 @@ class ListItemView extends FrameLayout{
 
     private void init() {
         //将布局界面添加到帧布局中显示即可
-        View view  = View.inflate(getContext(),R.layout.list_item,null);
+        View view = View.inflate(getContext(), R.layout.list_item, null);
         mIvPlay = (ImageView) view.findViewById(R.id.iv_play);
         addView(view);
     }
 
-    public ImageView getIvPlay(){
-        return  mIvPlay;
+    public ImageView getIvPlay() {
+        return mIvPlay;
     }
 
     public void addVideoView(MyVideoView myVideoView) {
