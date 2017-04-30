@@ -18,6 +18,7 @@ import android.widget.ImageView;
 class ListItemView extends FrameLayout{
 
     private ImageView mIvPlay;
+    private MyVideoView mMyVideoView;
 
     public ListItemView(@NonNull Context context) {
         this(context, null);
@@ -48,6 +49,14 @@ class ListItemView extends FrameLayout{
     }
 
     public void addVideoView(MyVideoView myVideoView) {
+        this.mMyVideoView = myVideoView;
         this.addView(myVideoView.getRootView());
+    }
+
+    public void release() {
+        //停止视频
+        mMyVideoView.release();
+        //将播放视频的view从列表中删除
+        this.removeView(mMyVideoView.getRootView());
     }
 }

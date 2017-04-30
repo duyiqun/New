@@ -101,7 +101,7 @@ class MyVideoView implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.play:
-                if(mMediaPlayer!=null&&mMediaPlayer.isPlaying()){
+                if (mMediaPlayer != null && mMediaPlayer.isPlaying()) {
                     mMediaPlayer.pause();
                     mPlay.setText("播放");
                 } else {
@@ -111,6 +111,13 @@ class MyVideoView implements View.OnClickListener {
                 break;
             default:
                 break;
+        }
+    }
+
+    public void release() {
+        if (mMediaPlayer != null && mMediaPlayer.isPlaying()) {
+            mMediaPlayer.release();
+            mMediaPlayer = null;
         }
     }
 }

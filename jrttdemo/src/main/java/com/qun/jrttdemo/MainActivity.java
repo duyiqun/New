@@ -11,6 +11,7 @@ public class MainActivity extends AppCompatActivity {
 
     private ListView mLv;
     private String url = "http://flv2.bn.netease.com/videolib3/1604/28/fVobI0704/SD/fVobI0704-mobile.mp4";
+    private ListItemView currentItemView;//点击后 正在播放视频的条目对象
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,18 +45,27 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            final ListItemView listItemView = new ListItemView(MainActivity.this);
-            listItemView.getIvPlay().setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    //点击播放按钮，添加一个播放视频的界面进行展示即可
-                    MyVideoView myVideoView = new MyVideoView(MainActivity.this);
-                    myVideoView.setUrl(url);
-                    myVideoView.startPlay();
-                    listItemView.addVideoView(myVideoView);
+            if(convertView==null){
+                final ListItemView listItemView = new ListItemView(MainActivity.this);
+                listItemView.getIvPlay().setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //点击播放按钮，添加一个播放视频的界面进行展示即可
+                        MyVideoView myVideoView = new MyVideoView(MainActivity.this);
+                        myVideoView.setUrl(url);
+                        myVideoView.startPlay();
+                        listItemView.addVideoView(myVideoView);
+                        currentItemView = listItemView;
+                    }
+                });
+                convertView = listItemView;
+            }else{
+                //将正在播放的视频停止
+                if (currentItemView != null&&currentItemView == convertView) {//判断当前播放视频的对象与正在复用的对象是否一致，如果一致才进行释放操作
+                    currentItemView.release();
                 }
-            });
-            return listItemView;
+            }
+            return convertView;
         }
     }
 }
