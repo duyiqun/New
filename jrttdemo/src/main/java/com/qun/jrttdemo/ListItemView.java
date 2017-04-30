@@ -8,6 +8,7 @@ import android.support.annotation.StyleRes;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 
 /**
  * 专门用来显示视频列表的布局的
@@ -15,6 +16,8 @@ import android.widget.FrameLayout;
  */
 
 class ListItemView extends FrameLayout{
+
+    private ImageView mIvPlay;
 
     public ListItemView(@NonNull Context context) {
         this(context, null);
@@ -36,6 +39,15 @@ class ListItemView extends FrameLayout{
     private void init() {
         //将布局界面添加到帧布局中显示即可
         View view  = View.inflate(getContext(),R.layout.list_item,null);
+        mIvPlay = (ImageView) view.findViewById(R.id.iv_play);
         addView(view);
+    }
+
+    public ImageView getIvPlay(){
+        return  mIvPlay;
+    }
+
+    public void addVideoView(MyVideoView myVideoView) {
+        this.addView(myVideoView.getRootView());
     }
 }

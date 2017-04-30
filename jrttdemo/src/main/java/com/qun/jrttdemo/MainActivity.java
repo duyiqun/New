@@ -10,6 +10,7 @@ import android.widget.ListView;
 public class MainActivity extends AppCompatActivity {
 
     private ListView mLv;
+    private String url = "http://flv2.bn.netease.com/videolib3/1604/28/fVobI0704/SD/fVobI0704-mobile.mp4";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +44,17 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            ListItemView listItemView = new ListItemView(MainActivity.this);
+            final ListItemView listItemView = new ListItemView(MainActivity.this);
+            listItemView.getIvPlay().setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //点击播放按钮，添加一个播放视频的界面进行展示即可
+                    MyVideoView myVideoView = new MyVideoView(MainActivity.this);
+                    myVideoView.setUrl(url);
+                    myVideoView.startPlay();
+                    listItemView.addVideoView(myVideoView);
+                }
+            });
             return listItemView;
         }
     }
