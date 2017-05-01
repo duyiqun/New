@@ -14,6 +14,8 @@ public class SkyWheel extends RelativeLayout {
 
     private PointF mCenter;//圆心
     private float radius;//半径
+    double degree;//夹角
+    private double diffDegree;//d当前的角度变化
 
     public SkyWheel(Context context) {
         this(context, null);
@@ -35,6 +37,15 @@ public class SkyWheel extends RelativeLayout {
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         super.onLayout(changed, l, t, r, b);
         compare();
+        //排版每个子控件的位置
+        for (int i = 0; i < this.getChildCount(); i++) {
+            View childView = this.getChildAt(i);
+            childView.layout(
+                    (int) (mCenter.x + Math.sin(i * degree + diffDegree) * radius - childView.getWidth() / 2),
+                    (int) (mCenter.y - Math.cos(i * degree + diffDegree) * radius - childView.getHeight() / 2),
+                    (int) (mCenter.x + Math.sin(i * degree + diffDegree) * radius + childView.getWidth() / 2),
+                    (int) (mCenter.y - Math.cos(i * degree + diffDegree) * radius + childView.getHeight() / 2));
+        }
     }
 
     private void compare() {
@@ -47,12 +58,12 @@ public class SkyWheel extends RelativeLayout {
         float max_height = 0;
 
         for (int i = 0; i < this.getChildCount(); i++) {
-            View childview = this.getChildAt(i);
-            if (childview.getWidth() > max_width) {
-                max_width = childview.getWidth();
+            View childView = this.getChildAt(i);
+            if (childView.getWidth() > max_width) {
+                max_width = childView.getWidth();
             }
-            if (childview.getHeight() > max_height) {
-                max_height = childview.getHeight();
+            if (childView.getHeight() > max_height) {
+                max_height = childView.getHeight();
             }
         }
 
@@ -60,5 +71,7 @@ public class SkyWheel extends RelativeLayout {
         float r2 = mCenter.y - max_height / 2;
 
         radius = Math.min(r1, r2);
+        //计算夹角
+        degree = Math.PI * 2 / this.getChildCount();
     }
 }
