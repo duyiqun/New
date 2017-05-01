@@ -64,7 +64,7 @@ public class DragedGridLayout extends GridLayout {
     private TextView newItemView() {
         //往mGridLayout添加条目
         TextView tv = new TextView(getContext());
-        tv.setBackgroundResource(R.drawable.sharp_tv_normal);
+        tv.setBackgroundResource(R.drawable.selector_tv_bg);
 //        mGridLayout.addView(tv);
         int margin = 5;//5个像素
         GridLayout.LayoutParams layoutParams = new GridLayout.LayoutParams();
@@ -106,6 +106,7 @@ public class DragedGridLayout extends GridLayout {
              */
             dragedView = v;
             v.startDrag(null, new View.DragShadowBuilder(v), null, 0);
+            dragedView.setEnabled(false);
 //            v.startDragAndDrop(null, new View.DragShadowBuilder(v), null, 0);
             return false;
         }
@@ -170,6 +171,12 @@ public class DragedGridLayout extends GridLayout {
                         DragedGridLayout.this.removeView(dragedView);
                         DragedGridLayout.this.addView(dragedView, touchIndex);
                     }
+                    break;
+                case DragEvent.ACTION_DRAG_ENDED:
+                    if (dragedView != null) {
+                        dragedView.setEnabled(true);
+                    }
+                    break;
                 default:
                     break;
             }
@@ -200,7 +207,7 @@ public class DragedGridLayout extends GridLayout {
         return -1;
     }
 
-    public interface  OnItemClickListener{
+    public interface OnItemClickListener {
         public void onItemClick(TextView view);
     }
 

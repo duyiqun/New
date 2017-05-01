@@ -1,6 +1,5 @@
 package com.qun.gridlayoutdemo;
 
-import android.app.Dialog;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -8,8 +7,6 @@ import android.util.SparseArray;
 import android.view.DragEvent;
 import android.view.Gravity;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.GridLayout;
 import android.widget.TextView;
 
@@ -71,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
                         mGridLayout.removeView(dragedView);
                         mGridLayout.addView(dragedView, touchIndex);
                     }
+                    break;
                 default:
                     break;
             }
@@ -174,22 +172,47 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void addItem(View view) {
-        Dialog dialog = new Dialog(MainActivity.this, R.style.Style_dialog);
-        dialog.setContentView(R.layout.view_dialog);
-        Window window = dialog.getWindow();
-        WindowManager.LayoutParams attributes = window.getAttributes();
-        attributes.gravity = Gravity.TOP;
-        attributes.height = WindowManager.LayoutParams.WRAP_CONTENT;
-        window.setAttributes(attributes);
-        dialog.setCanceledOnTouchOutside(true);
-        dialog.show();
+//        Dialog dialog = new Dialog(MainActivity.this, R.style.Style_dialog);
+//        dialog.setContentView(R.layout.view_dialog);
+//        Window window = dialog.getWindow();
+//        WindowManager.LayoutParams attributes = window.getAttributes();
+//        attributes.gravity = Gravity.TOP;
+//        attributes.height = WindowManager.LayoutParams.WRAP_CONTENT;
+//        window.setAttributes(attributes);
+//        dialog.setCanceledOnTouchOutside(true);
+//        dialog.show();
+
+        DragDialog dragDialog = new DragDialog(MainActivity.this);
+        List<String> items = new ArrayList<>();
+        items.add("上海");
+        items.add("昆山南");
+        items.add("苏州");
+        items.add("无锡");
+        items.add("常州");
+        items.add("丹阳");
+        items.add("镇江");
+        items.add("南京南");
+
+        mHideGridLayout = (DragedGridLayout) findViewById(R.id.hideGridLayout);
+        List<String> items1 = new ArrayList<>();
+        items1.add("香港");
+        items1.add("深圳");
+        items1.add("北京");
+        items1.add("广州");
+        items1.add("杭州");
+        items1.add("武汉");
+        items1.add("厦门");
+        items1.add("东莞");
+
+        dragDialog.setShowAndHideItems(items, items1);
+        dragDialog.show();
     }
 
     public void addItem1(View view) {
         //往mGridLayout添加条目
         TextView tv = new TextView(MainActivity.this);
         tv.setText(index + "");
-        tv.setBackgroundResource(R.drawable.sharp_tv_normal);
+        tv.setBackgroundResource(R.drawable.selector_tv_bg);
         index++;
 //        mGridLayout.addView(tv);
         int margin = 5;//5个像素
