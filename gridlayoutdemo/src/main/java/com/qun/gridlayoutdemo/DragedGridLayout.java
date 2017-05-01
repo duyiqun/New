@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.GridLayout;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -205,6 +206,16 @@ public class DragedGridLayout extends GridLayout {
             }
         }
         return -1;
+    }
+
+    public List<String> getItems() {
+        //遍历子控件返回数据即可
+        List<String> datas = new ArrayList<>();
+        for (int i = 0; i < this.getChildCount(); i++) {
+            TextView textview = (TextView) this.getChildAt(i);
+            datas.add(textview.getText().toString());
+        }
+        return datas;
     }
 
     public interface OnItemClickListener {

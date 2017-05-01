@@ -1,5 +1,6 @@
 package com.qun.gridlayoutdemo;
 
+import android.content.DialogInterface;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +10,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.GridLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -182,7 +184,7 @@ public class MainActivity extends AppCompatActivity {
 //        dialog.setCanceledOnTouchOutside(true);
 //        dialog.show();
 
-        DragDialog dragDialog = new DragDialog(MainActivity.this);
+        final DragDialog dragDialog = new DragDialog(MainActivity.this);
         List<String> items = new ArrayList<>();
         items.add("上海");
         items.add("昆山南");
@@ -205,6 +207,15 @@ public class MainActivity extends AppCompatActivity {
         items1.add("东莞");
 
         dragDialog.setShowAndHideItems(items, items1);
+        dragDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface d) {
+                //将显示中的频道按顺序返回数据
+                Toast.makeText(MainActivity.this, "dialog.getShowItems():" + dragDialog.getShowItems(), Toast
+                        .LENGTH_SHORT).show();
+            }
+        });
+
         dragDialog.show();
     }
 

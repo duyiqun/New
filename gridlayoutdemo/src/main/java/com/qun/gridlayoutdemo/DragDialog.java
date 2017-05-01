@@ -59,4 +59,8 @@ public class DragDialog extends Dialog {
         if (hideItems != null && hideItems.size() > 0)
             mHideDragedGridLayout.setItems(hideItems);
     }
+
+    public List<String> getShowItems() {
+        return mShowDragedGridLayout.getItems();
+    }
 }
