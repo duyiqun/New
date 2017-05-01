@@ -9,6 +9,7 @@
 * 测试地址：http://本地ip:8080/360/list1.json
 
 ####本项目另包含
+* WebView的使用（实现Android代码和JS代码的互调）
 * 360新闻案例
 * 社会化分享（SharedSDK）
 * 推送（极光推送）

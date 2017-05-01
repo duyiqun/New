@@ -10,6 +10,9 @@ import android.view.View;
 import android.widget.GridLayout;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
 
     private GridLayout mGridLayout;
@@ -71,6 +74,8 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
     };
+    private DragedGridLayout mDragedGridLayout;
+    private DragedGridLayout mHideGridLayout;
 
     private int getTouchIndex(DragEvent event) {
         //遍历矩形数组，看哪一个矩形包含了当前触摸点并返回即可
@@ -121,6 +126,32 @@ public class MainActivity extends AppCompatActivity {
     private void initView() {
         mGridLayout = (GridLayout) findViewById(R.id.gridLayout);
         mGridLayout.setOnDragListener(odl);
+
+        mDragedGridLayout = (DragedGridLayout) findViewById(R.id.dragedGridLayout);
+        List<String> items = new ArrayList<>();
+        items.add("上海");
+        items.add("昆山南");
+        items.add("苏州");
+        items.add("无锡");
+        items.add("常州");
+        items.add("丹阳");
+        items.add("镇江");
+        items.add("南京南");
+        mDragedGridLayout.setAllowDrag(true);
+        mDragedGridLayout.setItems(items);
+
+        mHideGridLayout = (DragedGridLayout) findViewById(R.id.hideGridLayout);
+        List<String> items1 = new ArrayList<>();
+        items1.add("香港");
+        items1.add("深圳");
+        items1.add("北京");
+        items1.add("广州");
+        items1.add("杭州");
+        items1.add("武汉");
+        items1.add("厦门");
+        items1.add("东莞");
+        mHideGridLayout.setAllowDrag(false);
+        mHideGridLayout.setItems(items1);
     }
 
     public void addItem(View view) {

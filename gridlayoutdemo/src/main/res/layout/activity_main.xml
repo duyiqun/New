@@ -18,8 +18,31 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:animateLayoutChanges="true"
-        android:columnCount="4">
+        android:columnCount="4"
+        android:visibility="gone">
 
     </GridLayout>
+
+    <com.qun.gridlayoutdemo.DragedGridLayout
+        android:id="@+id/dragedGridLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </com.qun.gridlayoutdemo.DragedGridLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#6000"
+        android:gravity="center"
+        android:padding="5dp"
+        android:text="点击选择频道"/>
+
+    <com.qun.gridlayoutdemo.DragedGridLayout
+        android:id="@+id/hideGridLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </com.qun.gridlayoutdemo.DragedGridLayout>
 
 </LinearLayout>
