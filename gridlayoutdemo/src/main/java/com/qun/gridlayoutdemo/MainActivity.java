@@ -1,7 +1,9 @@
 package com.qun.gridlayoutdemo;
 
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.SparseArray;
 import android.view.DragEvent;
 import android.view.Gravity;
 import android.view.View;
@@ -12,6 +14,7 @@ public class MainActivity extends AppCompatActivity {
 
     private GridLayout mGridLayout;
     private int index;
+    private View dragedView;//被拖拽的视图
     private View.OnLongClickListener olcl = new View.OnLongClickListener() {
         @Override
         public boolean onLongClick(View v) {
@@ -22,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
              * 参数三：本地数据，不需要给null即可
              * 参数四：标记，未定义，给0即可
              */
+            dragedView = v;
             v.startDrag(null, new View.DragShadowBuilder(v), null, 0);
 //            v.startDragAndDrop(null, new View.DragShadowBuilder(v), null, 0);
             return false;
@@ -43,9 +47,69 @@ public class MainActivity extends AppCompatActivity {
          */
         @Override
         public boolean onDrag(View v, DragEvent event) {
+            String dragEventAction = getDragEventAction(event);
+            System.out.println(dragEventAction);
+//            Rect rect = new Rect();
+//            rect.contains();
+            switch (event.getAction()) {
+                case DragEvent.ACTION_DRAG_STARTED:
+                    //创建出与子控件对应的矩形对象
+                    initRects();
+
+                    break;
+                case DragEvent.ACTION_DRAG_LOCATION:
+                    //实时判断触摸点是否进入了某一个子控件，如果进入了，就返回当前子控件的索引
+                    int touchIndex = getTouchIndex(event);
+                    //判断被拖拽的视图与当前进入的子控件视图是否是同一个，如果是则不删除添加操作
+                    if (touchIndex > -1 && dragedView != null && dragedView != mGridLayout.getChildAt(touchIndex)) {
+                        mGridLayout.removeView(dragedView);
+                        mGridLayout.addView(dragedView, touchIndex);
+                    }
+                default:
+                    break;
+            }
             return true;
         }
     };
+
+    private int getTouchIndex(DragEvent event) {
+        //遍历矩形数组，看哪一个矩形包含了当前触摸点并返回即可
+        for (int i = 0; i < mRects.length; i++) {
+            Rect rect = mRects[i];
+            if (rect.contains((int) event.getX(), (int) event.getY())) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    private Rect[] mRects;
+
+    //创建出与子控件对应的矩形对象
+    private void initRects() {
+        mRects = new Rect[mGridLayout.getChildCount()];
+        for (int i = 0; i < mGridLayout.getChildCount(); i++) {
+            View childView = mGridLayout.getChildAt(i);
+            Rect rect = new Rect(childView.getLeft(), childView.getTop(), childView.getRight(), childView.getBottom());
+            mRects[i] = rect;
+        }
+    }
+
+    //SparseArray<String> 相当于hashmap,但更高效，谷歌官方推荐
+    static SparseArray<String> dragEventType = new SparseArray<String>();
+
+    static {
+        dragEventType.put(DragEvent.ACTION_DRAG_STARTED, "STARTED");
+        dragEventType.put(DragEvent.ACTION_DRAG_ENDED, "ENDED");
+        dragEventType.put(DragEvent.ACTION_DRAG_ENTERED, "ENTERED");
+        dragEventType.put(DragEvent.ACTION_DRAG_EXITED, "EXITED");
+        dragEventType.put(DragEvent.ACTION_DRAG_LOCATION, "LOCATION");
+        dragEventType.put(DragEvent.ACTION_DROP, "DROP");
+    }
+
+    public static String getDragEventAction(DragEvent de) {
+        return dragEventType.get(de.getAction());
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
