@@ -152,6 +152,22 @@ public class MainActivity extends AppCompatActivity {
         items1.add("东莞");
         mHideGridLayout.setAllowDrag(false);
         mHideGridLayout.setItems(items1);
+
+        //给控件设置接口监听
+        mDragedGridLayout.setOnItemClickListener(new DragedGridLayout.OnItemClickListener() {
+            @Override
+            public void onItemClick(TextView view) {
+                mDragedGridLayout.removeView(view);
+                mHideGridLayout.addItem(view.getText().toString());
+            }
+        });
+        mHideGridLayout.setOnItemClickListener(new DragedGridLayout.OnItemClickListener() {
+            @Override
+            public void onItemClick(TextView view) {
+                mHideGridLayout.removeView(view);
+                mDragedGridLayout.addItem(view.getText().toString());
+            }
+        });
     }
 
     public void addItem(View view) {

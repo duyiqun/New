@@ -23,6 +23,7 @@ public class DragedGridLayout extends GridLayout {
 
     public static final int COLUMN_COUNT = 4;
     private boolean flag;//用来标记是否可以进行拖拽操作
+    private OnItemClickListener mOnItemClickListener;
 
     public DragedGridLayout(Context context) {
         this(context, null);
@@ -54,7 +55,7 @@ public class DragedGridLayout extends GridLayout {
         }
     }
 
-    private void addItem(String item) {
+    public void addItem(String item) {
         TextView textView = newItemView();
         textView.setText(item);
         this.addView(textView);
@@ -79,6 +80,15 @@ public class DragedGridLayout extends GridLayout {
         } else {
             tv.setOnLongClickListener(null);
         }
+
+        tv.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mOnItemClickListener != null) {
+                    mOnItemClickListener.onItemClick((TextView) v);
+                }
+            }
+        });
 
         return tv;
     }
@@ -188,5 +198,13 @@ public class DragedGridLayout extends GridLayout {
             }
         }
         return -1;
+    }
+
+    public interface  OnItemClickListener{
+        public void onItemClick(TextView view);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.mOnItemClickListener = onItemClickListener;
     }
 }
