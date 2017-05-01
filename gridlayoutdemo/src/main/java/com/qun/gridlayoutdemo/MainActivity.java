@@ -1,5 +1,6 @@
 package com.qun.gridlayoutdemo;
 
+import android.app.Dialog;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -7,6 +8,8 @@ import android.util.SparseArray;
 import android.view.DragEvent;
 import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.GridLayout;
 import android.widget.TextView;
 
@@ -171,6 +174,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void addItem(View view) {
+        Dialog dialog = new Dialog(MainActivity.this, R.style.Style_dialog);
+        dialog.setContentView(R.layout.view_dialog);
+        Window window = dialog.getWindow();
+        WindowManager.LayoutParams attributes = window.getAttributes();
+        attributes.gravity = Gravity.TOP;
+        attributes.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        window.setAttributes(attributes);
+        dialog.setCanceledOnTouchOutside(true);
+        dialog.show();
+    }
+
+    public void addItem1(View view) {
         //往mGridLayout添加条目
         TextView tv = new TextView(MainActivity.this);
         tv.setText(index + "");
