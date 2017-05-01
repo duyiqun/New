@@ -19,27 +19,32 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/more_icon_zhifubao"/>
+            android:src="@mipmap/more_icon_zhifubao"
+            android:tag="支付宝"/>
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/more_laiwang"/>
+            android:src="@mipmap/more_laiwang"
+            android:tag="来往"/>
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/more_weibo"/>
+            android:src="@mipmap/more_weibo"
+            android:tag="微博"/>
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/more_weixin"/>
+            android:src="@mipmap/more_weixin"
+            android:tag="微信"/>
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/more_mms"/>
+            android:src="@mipmap/more_mms"
+            android:tag="短信"/>
 
     </com.qun.skywheeldemo.SkyWheel>
 
